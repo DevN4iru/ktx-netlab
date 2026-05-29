@@ -1,0 +1,41 @@
+===== KTX NETLAB XFCE + DESKFLOW CHECK =====
+Fri May 29 18:05:44 PST 2026
+ Static hostname: ktx-netlab
+       Icon name: computer-laptop
+         Chassis: laptop 💻
+      Machine ID: 9622e785b19246b7bc07ff62317f9449
+         Boot ID: 934eb34ab3c9418bac7a07fe2a82a12a
+Operating System: Arch Linux
+          Kernel: Linux 6.18.33-1-lts
+    Architecture: x86-64
+ Hardware Vendor: Dell Inc.
+  Hardware Model: Inspiron N5040
+Hardware Version: A04
+Firmware Version: A04
+   Firmware Date: Fri 2012-03-23
+    Firmware Age: 14y 2month 6d
+
+===== NETWORK =====
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp19s0          UP             192.168.254.160/24 fe80::5106:ba3c:64f4:1b61/64 
+wlp18s0b1        DOWN           
+
+===== SERVICES =====
+enabled
+enabled
+enabled
+active
+active
+active
+
+===== PACKAGES =====
+xfce4-session 4.20.4-1
+lightdm 1:1.32.0-6
+deskflow 1.26.0-2
+fastfetch 2.63.1-1
+btop 1.4.7-1
+
+===== MEMORY =====
+               total        used        free      shared  buff/cache   available
+Mem:           5.6Gi       664Mi       4.3Gi        49Mi       911Mi       4.9Gi
+Swap:          4.0Gi          0B       4.0Gi

@@ -35,7 +35,7 @@ Repurpose an old Dell i3 laptop with 6GB RAM into a lightweight Arch Linux netwo
 - [x] Arch base installed
 - [x] First boot successful
 - [x] Installed system SSH working
-- [ ] XFCE installed
+- [x] XFCE installed
 - [ ] Network/dev tools installed
 - [ ] Cisco Networking Basics started
 - [ ] First lab note written
@@ -59,3 +59,10 @@ Target disk for Arch install:
 `/dev/sda`
 
 Warning: `/dev/sdb` is the Ventoy USB and must not be modified.
+
+## Desktop checkpoint
+
+- XFCE desktop installed
+- LightDM login works
+- Deskflow keyboard/mouse sharing works
+- Debian workstation can control Arch NetLab over SSH
