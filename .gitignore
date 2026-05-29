@@ -1,0 +1,11 @@
+.env
+*.key
+*.pem
+id_rsa
+id_ed25519
+*.sqlite
+*.db
+node_modules/
+vendor/
+__pycache__/
+.DS_Store
