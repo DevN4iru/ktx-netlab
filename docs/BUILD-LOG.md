@@ -37,8 +37,8 @@ Repurpose an old Dell i3 laptop with 6GB RAM into a lightweight Arch Linux netwo
 - [x] Installed system SSH working
 - [x] XFCE installed
 - [x] Network/dev tools installed
-- [ ] Cisco Networking Basics started
-- [ ] First lab note written
+- [x] Cisco Networking Basics started
+- [x] First lab note written
 - [ ] Dashboard MVP started
 
 ## Hardware audit result
