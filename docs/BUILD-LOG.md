@@ -36,7 +36,7 @@ Repurpose an old Dell i3 laptop with 6GB RAM into a lightweight Arch Linux netwo
 - [x] First boot successful
 - [x] Installed system SSH working
 - [x] XFCE installed
-- [ ] Network/dev tools installed
+- [x] Network/dev tools installed
 - [ ] Cisco Networking Basics started
 - [ ] First lab note written
 - [ ] Dashboard MVP started
@@ -66,3 +66,13 @@ Warning: `/dev/sdb` is the Ventoy USB and must not be modified.
 - LightDM login works
 - Deskflow keyboard/mouse sharing works
 - Debian workstation can control Arch NetLab over SSH
+
+## NetLab tools checkpoint
+
+- Docker installed and enabled
+- Caddy installed and enabled
+- nmap, tcpdump, traceroute, dig, whois, iperf3 installed
+- Python, Node.js, pnpm, SQLite installed
+- GitHub CLI and base-devel installed
+- Wireshark installed
+- Repo cloned on Dell NetLab node

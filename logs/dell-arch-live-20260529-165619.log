@@ -3915,3 +3915,13 @@ initial language: en
 [2026-05-29T18:03:55.894] WARNING: desktop process exited with code: 9
 [2026-05-29T18:04:05.648] INFO: starting client process (desktop mode)
 [2026-05-29T18:04:05.649] INFO: running command: /usr/bin/deskflow-core client
+
+Broadcast message from root@ktx-netlab on pts/2 (Fri 2026-05-29 18:18:11 PST):
+
+The system will reboot now!
+
+Connection to 192.168.254.160 closed by remote host.
+Connection to 192.168.254.160 closed.
+[?2004h
+[1;38;2;125;207;255m kirch is on /home/kirch/Projects/ktx-netlab[0m [38;2;86;95;137m|[0m [1;38;2;255;121;198m main[38;2;245;194;231m*[0m 
+[1;38;2;255;85;85m❯[0m 

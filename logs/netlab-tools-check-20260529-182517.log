@@ -1,0 +1,65 @@
+===== KTX NETLAB TOOL CHECK =====
+Fri May 29 18:25:25 PST 2026
+ Static hostname: ktx-netlab
+       Icon name: computer-laptop
+         Chassis: laptop 💻
+      Machine ID: 9622e785b19246b7bc07ff62317f9449
+         Boot ID: eae89b58776d4ca39d5474dc8fb55690
+Operating System: Arch Linux
+          Kernel: Linux 6.18.33-1-lts
+    Architecture: x86-64
+ Hardware Vendor: Dell Inc.
+  Hardware Model: Inspiron N5040
+Hardware Version: A04
+Firmware Version: A04
+   Firmware Date: Fri 2012-03-23
+    Firmware Age: 14y 2month 6d
+
+===== SERVICES =====
+enabled
+enabled
+enabled
+enabled
+enabled
+active
+active
+active
+active
+active
+
+===== TOOLS =====
+Docker version 29.5.1, build 2518b52d94
+v2.11.3
+Python 3.14.5
+v26.2.0
+11.3.0
+Nmap version 7.99 ( https://nmap.org )
+Platform: x86_64-pc-linux-gnu
+Compiled with: liblua-5.4.8 openssl-3.6.2 libssh2-1.11.1 libz-1.3.2 libpcre2-10.47 libpcap-1.10.6 nmap-libdnet-1.18.0 ipv6
+tcpdump version 4.99.6
+libpcap version 1.10.6 (64-bit time_t, with TPACKET_V3)
+OpenSSL 3.6.2 7 Apr 2026
+64-bit build, 64-bit time_t
+
+; <<>> DiG 9.20.23 <<>> archlinux.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54414
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;archlinux.org.			IN	A
+
+;; ANSWER SECTION:
+archlinux.org.		25	IN	A	209.126.35.79
+
+;; Query time: 6 msec
+;; SERVER: 192.168.254.254#53(192.168.254.254) (UDP)
+;; WHEN: Fri May 29 18:25:26 PST 2026
+;; MSG SIZE  rcvd: 58
+
+
+===== GROUPS =====
+kirch wireshark docker wheel
