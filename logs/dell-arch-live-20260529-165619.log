@@ -167,4 +167,32 @@ Swap:             0B          0B          0B
 git add docs/BUILD-LOG.md logs/
 git commit -m "Checkpoint: Arch live SSH and Dell hardware audit"
 git push
+[?2004l[main 4d65c6b] Checkpoint: Arch live SSH and Dell hardware audit
+ 2 files changed, 193 insertions(+), 4 deletions(-)
+ create mode 100644 logs/dell-arch-live-20260529-165619.log
+Enumerating objects: 9, done.
+Counting objects:  11% (1/9)Counting objects:  22% (2/9)Counting objects:  33% (3/9)Counting objects:  44% (4/9)Counting objects:  55% (5/9)Counting objects:  66% (6/9)Counting objects:  77% (7/9)Counting objects:  88% (8/9)Counting objects: 100% (9/9)Counting objects: 100% (9/9), done.
+Delta compression using up to 4 threads
+Compressing objects:  20% (1/5)Compressing objects:  40% (2/5)Compressing objects:  60% (3/5)Compressing objects:  80% (4/5)Compressing objects: 100% (5/5)Compressing objects: 100% (5/5), done.
+Writing objects:  16% (1/6)Writing objects:  33% (2/6)Writing objects:  50% (3/6)Writing objects:  66% (4/6)Writing objects:  83% (5/6)Writing objects: 100% (6/6)Writing objects: 100% (6/6), 4.12 KiB | 4.13 MiB/s, done.
+Total 6 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas:   0% (0/1)[Kremote: Resolving deltas: 100% (1/1)[Kremote: Resolving deltas: 100% (1/1), completed with 1 local object.[K
+To github.com:DevN4iru/ktx-netlab.git
+   abd4b16..4d65c6b  main -> main
+[?2004h
+[1;38;2;125;207;255m kirch is on /home/kirch/Projects/ktx-netlab[0m [38;2;86;95;137m|[0m [1;38;2;255;121;198m main[38;2;245;194;231m*[0m 
+[1;38;2;80;250;123m❯[0m 
+[?2004l[?2004h
+[1;38;2;125;207;255m kirch is on /home/kirch/Projects/ktx-netlab[0m [38;2;86;95;137m|[0m [1;38;2;255;121;198m main[38;2;245;194;231m*[0m 
+[1;38;2;80;250;123m❯[0m [7mcd ~/Projects/ktx-netlab[27m
+[7mgit status --short[27m[A[C[Ccd ~/Projects/ktx-netlab
+git status --short
+[?2004l [31mM[m logs/dell-arch-live-20260529-165619.log
+[?2004h
+[1;38;2;125;207;255m kirch is on /home/kirch/Projects/ktx-netlab[0m [38;2;86;95;137m|[0m [1;38;2;255;121;198m main[38;2;245;194;231m*[0m 
+[1;38;2;80;250;123m❯[0m [7mgit add .[27m
+[7mgit commit -m "Checkpoint: Confirm Dell disk wipe approval"[27m
+[7mgit push[27m[A[A[C[Cgit add .
+git commit -m "Checkpoint: Confirm Dell disk wipe approval"
+git push
 [?2004l
