@@ -26,8 +26,8 @@ Repurpose an old Dell i3 laptop with 6GB RAM into a lightweight Arch Linux netwo
 
 - [x] GitHub repository created
 - [x] Initial documentation pushed
-- [ ] Arch ISO downloaded
-- [ ] Arch ISO copied to Ventoy
+- [x] Arch ISO downloaded
+- [x] Arch ISO copied to Ventoy
 - [ ] Dell booted into Arch live ISO
 - [ ] Live SSH enabled
 - [ ] Hardware audit completed
