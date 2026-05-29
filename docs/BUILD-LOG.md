@@ -28,10 +28,10 @@ Repurpose an old Dell i3 laptop with 6GB RAM into a lightweight Arch Linux netwo
 - [x] Initial documentation pushed
 - [x] Arch ISO downloaded
 - [x] Arch ISO copied to Ventoy
-- [ ] Dell booted into Arch live ISO
-- [ ] Live SSH enabled
-- [ ] Hardware audit completed
-- [ ] Disk/boot mode confirmed
+- [x] Dell booted into Arch live ISO
+- [x] Live SSH enabled
+- [x] Hardware audit completed
+- [x] Disk/boot mode confirmed
 - [ ] Arch base installed
 - [ ] First boot successful
 - [ ] Installed system SSH working
@@ -40,3 +40,22 @@ Repurpose an old Dell i3 laptop with 6GB RAM into a lightweight Arch Linux netwo
 - [ ] Cisco Networking Basics started
 - [ ] First lab note written
 - [ ] Dashboard MVP started
+
+## Hardware audit result
+
+- Boot mode: Legacy BIOS
+- Internal disk: /dev/sda, 465.8G, TOSHIBA MK5076GSX
+- Current disk contents: existing NTFS partitions
+- Ventoy USB: /dev/sdb, 30G Mass Storage
+- Ethernet interface: enp19s0
+- Live ISO IP: 192.168.254.160
+- CPU: Intel Core i3 M 390 @ 2.67GHz
+- RAM: 5.6Gi usable
+
+## Install target
+
+Target disk for Arch install:
+
+`/dev/sda`
+
+Warning: `/dev/sdb` is the Ventoy USB and must not be modified.
