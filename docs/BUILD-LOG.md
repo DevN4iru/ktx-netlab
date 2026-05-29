@@ -32,9 +32,9 @@ Repurpose an old Dell i3 laptop with 6GB RAM into a lightweight Arch Linux netwo
 - [x] Live SSH enabled
 - [x] Hardware audit completed
 - [x] Disk/boot mode confirmed
-- [ ] Arch base installed
-- [ ] First boot successful
-- [ ] Installed system SSH working
+- [x] Arch base installed
+- [x] First boot successful
+- [x] Installed system SSH working
 - [ ] XFCE installed
 - [ ] Network/dev tools installed
 - [ ] Cisco Networking Basics started
