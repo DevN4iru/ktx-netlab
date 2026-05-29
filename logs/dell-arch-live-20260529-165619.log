@@ -2187,4 +2187,32 @@ Script done.
 git add docs/BUILD-LOG.md logs/
 git commit -m "Checkpoint: Arch base install and first SSH boot"
 git push
+[?2004l[main 2e7d6fd] Checkpoint: Arch base install and first SSH boot
+ 3 files changed, 3952 insertions(+), 4 deletions(-)
+ create mode 100644 logs/dell-arch-install-20260529-170016.log
+Enumerating objects: 12, done.
+Counting objects:   8% (1/12)Counting objects:  16% (2/12)Counting objects:  25% (3/12)Counting objects:  33% (4/12)Counting objects:  41% (5/12)Counting objects:  50% (6/12)Counting objects:  58% (7/12)Counting objects:  66% (8/12)Counting objects:  75% (9/12)Counting objects:  83% (10/12)Counting objects:  91% (11/12)Counting objects: 100% (12/12)Counting objects: 100% (12/12), done.
+Delta compression using up to 4 threads
+Compressing objects:  16% (1/6)Compressing objects:  33% (2/6)Compressing objects:  50% (3/6)Compressing objects:  66% (4/6)Compressing objects:  83% (5/6)Compressing objects: 100% (6/6)Compressing objects: 100% (6/6), done.
+Writing objects:  14% (1/7)Writing objects:  28% (2/7)Writing objects:  42% (3/7)Writing objects:  57% (4/7)Writing objects:  71% (5/7)Writing objects: 100% (7/7)Writing objects: 100% (7/7), 197.72 KiB | 611.00 KiB/s, done.
+Total 7 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas:   0% (0/2)[Kremote: Resolving deltas:  50% (1/2)[Kremote: Resolving deltas: 100% (2/2)[Kremote: Resolving deltas: 100% (2/2), completed with 1 local object.[K
+To github.com:DevN4iru/ktx-netlab.git
+   ed7b08a..2e7d6fd  main -> main
+[?2004h
+[1;38;2;125;207;255m kirch is on /home/kirch/Projects/ktx-netlab[0m [38;2;86;95;137m|[0m [1;38;2;255;121;198m main[38;2;245;194;231m*[0m 
+[1;38;2;80;250;123m❯[0m 
+[?2004l[?2004h
+[1;38;2;125;207;255m kirch is on /home/kirch/Projects/ktx-netlab[0m [38;2;86;95;137m|[0m [1;38;2;255;121;198m main[38;2;245;194;231m*[0m 
+[1;38;2;80;250;123m❯[0m [7mcd ~/Projects/ktx-netlab[27m
+[7mgit status --short[27m[A[C[Ccd ~/Projects/ktx-netlab
+git status --short
+[?2004l [31mM[m logs/dell-arch-live-20260529-165619.log
+[?2004h
+[1;38;2;125;207;255m kirch is on /home/kirch/Projects/ktx-netlab[0m [38;2;86;95;137m|[0m [1;38;2;255;121;198m main[38;2;245;194;231m*[0m 
+[1;38;2;80;250;123m❯[0m [7mgit add logs/[27m
+[7mgit commit -m "Checkpoint: capture completed first boot audit log"[27m
+[7mgit push[27m[A[A[C[Cgit add logs/
+git commit -m "Checkpoint: capture completed first boot audit log"
+git push
 [?2004l
