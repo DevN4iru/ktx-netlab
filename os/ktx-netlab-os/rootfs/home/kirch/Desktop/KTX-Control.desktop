@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KTX Control
+Comment=Open KTX NetLab OS control center
+Exec=ktx-control
+Icon=utilities-terminal
+Terminal=false
+Categories=System;Network;

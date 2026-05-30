@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 cat <<'BANNER'
-╔════════════════════════════════════════════╗
-║              KTX NetLab OS                ║
-║        Arch-based network lab system       ║
-║              v0.1 first-wire              ║
-╚════════════════════════════════════════════╝
+KTX NetLab OS v0.1
+Welcome back, Kirch.
+Setting up the KTX NetLab. Please wait a moment.
 BANNER
 
+echo
 echo "Host:   $(hostname)"
 echo "Kernel: $(uname -r)"
-echo "IP:"
+echo "Mode:   $(cat /etc/ktx-mode 2>/dev/null || echo lab)"
+echo
 ip -br addr | sed 's/^/  /'
 echo
 echo "Run: ktx help"

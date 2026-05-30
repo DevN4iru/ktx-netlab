@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#111418"/>
+  <text x="96" y="120" fill="#e5e7eb" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="600">Welcome back, Kirch.</text>
+  <text x="96" y="176" fill="#9ca3af" font-family="Inter, Arial, sans-serif" font-size="28">Setting up the KTX NetLab. Please wait a moment.</text>
+  <text x="96" y="1010" fill="#6b7280" font-family="Inter, Arial, sans-serif" font-size="22">KTX NetLab OS v0.1 · Arch-based network lab operating environment</text>
+</svg>

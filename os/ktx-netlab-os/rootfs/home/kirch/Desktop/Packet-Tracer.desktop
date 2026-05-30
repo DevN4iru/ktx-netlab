@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Packet Tracer
+Comment=Packet Tracer placeholder
+Exec=xfce4-terminal --title="Packet Tracer" --hold --command="ktx-packettracer-placeholder"
+Icon=network-workgroup
+Terminal=false
+Categories=Network;Education;

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Browser
+Comment=Open default web browser
+Exec=exo-open --launch WebBrowser
+Icon=web-browser
+Terminal=false
+Categories=Network;

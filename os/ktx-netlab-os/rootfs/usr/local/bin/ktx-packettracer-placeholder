@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+cat <<'MSG'
+Packet Tracer is not installed yet.
+
+Install it later only from Cisco NetAcad's official installer.
+After installation, this launcher can be changed to open Packet Tracer directly.
+MSG
+read -rp "Press Enter to close..."

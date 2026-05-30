@@ -14,14 +14,14 @@ show_release() {
   if [ -f "$RELEASE" ]; then
     cat "$RELEASE"
   else
-    echo "KTX NetLab OS release file missing: $RELEASE"
+    echo "Missing: $RELEASE"
   fi
 }
 
 cmd_status() {
   show_release
   section "HOST"
-  hostnamectl | sed -n '1,12p'
+  hostnamectl | sed -n '1,14p'
   section "UPTIME"
   uptime
   section "MEMORY"
@@ -33,7 +33,7 @@ cmd_status() {
   section "ROUTE"
   ip route
   section "SERVICES"
-  for svc in NetworkManager sshd docker caddy lightdm; do
+  for svc in NetworkManager sshd docker caddy lightdm nftables dnsmasq hostapd; do
     printf "%-18s" "$svc"
     systemctl is-active "$svc" 2>/dev/null || true
   done
@@ -65,7 +65,7 @@ cmd_net() {
 
 cmd_services() {
   section "SERVICE STATUS"
-  for svc in NetworkManager sshd docker caddy lightdm ktx-netlab-bootcheck; do
+  for svc in NetworkManager sshd docker caddy lightdm nftables dnsmasq hostapd ktx-netlab-bootcheck; do
     echo
     echo "--- $svc ---"
     systemctl status "$svc" --no-pager -l 2>/dev/null | sed -n '1,12p' || true
@@ -88,7 +88,7 @@ cmd_repo() {
     section "GIT STATUS"
     git status -sb
     section "LAST COMMITS"
-    git log --oneline -5
+    git log --oneline -8
   else
     echo "Repo not found: $REPO"
     exit 1
@@ -102,6 +102,9 @@ cmd_logs() {
   section "LATEST BOOTCHECK"
   tail -n 80 /var/log/ktx-netlab/bootcheck.log 2>/dev/null || true
 
+  section "LATEST MODE LOG"
+  tail -n 80 /var/log/ktx-netlab/mode.log 2>/dev/null || true
+
   section "LATEST REPO AUDITS"
   find "$REPO/logs/netlab-audits" -type f 2>/dev/null | sort | tail -n 5 || true
 }
@@ -114,9 +117,10 @@ cmd_tui() {
     echo "1) Status"
     echo "2) Network test"
     echo "3) Services"
-    echo "4) Audit"
-    echo "5) Repo status"
-    echo "6) Logs"
+    echo "4) Mode manager"
+    echo "5) Run audit"
+    echo "6) Repo status"
+    echo "7) Logs"
     echo "0) Exit"
     echo
     read -rp "ktx> " choice
@@ -125,9 +129,10 @@ cmd_tui() {
       1) cmd_status ;;
       2) cmd_net ;;
       3) cmd_services ;;
-      4) cmd_audit ;;
-      5) cmd_repo ;;
-      6) cmd_logs ;;
+      4) /usr/local/bin/ktx-mode menu ;;
+      5) cmd_audit ;;
+      6) cmd_repo ;;
+      7) cmd_logs ;;
       0) exit 0 ;;
       *) echo "Invalid choice" ;;
     esac
@@ -142,15 +147,20 @@ cmd_help() {
 KTX NetLab OS command center
 
 Usage:
-  ktx status      Show OS, host, memory, disk, network, services
-  ktx net         Run network diagnostics
-  ktx services    Show core service status
-  ktx audit       Run full KTX NetLab audit
-  ktx repo        Show Git repo status and latest commits
-  ktx logs        Show KTX logs
-  ktx tui         Open terminal control menu
-  ktx release     Show release identity
-  ktx help        Show this help
+  ktx status          Show OS, host, memory, disk, network, services
+  ktx net             Run network diagnostics
+  ktx services        Show core service status
+  ktx mode status     Show current KTX mode
+  ktx mode lab        Set safe lab mode
+  ktx mode sensor     Set sensor mode
+  ktx mode router     Show router-mode dry run
+  ktx mode recovery   Show recovery-mode dry run
+  ktx audit           Run full KTX NetLab audit
+  ktx repo            Show Git repo status and latest commits
+  ktx logs            Show KTX logs
+  ktx tui             Open terminal control menu
+  ktx release         Show release identity
+  ktx help            Show this help
 HELP
 }
 
@@ -158,6 +168,7 @@ case "${1:-help}" in
   status) cmd_status ;;
   net) cmd_net ;;
   services) cmd_services ;;
+  mode) shift; /usr/local/bin/ktx-mode "${@:-status}" ;;
   audit) cmd_audit ;;
   repo) cmd_repo ;;
   logs) cmd_logs ;;

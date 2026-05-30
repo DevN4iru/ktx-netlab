@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Network Settings
+Comment=Open NetworkManager connection editor
+Exec=nm-connection-editor
+Icon=network-wired
+Terminal=false
+Categories=Settings;Network;

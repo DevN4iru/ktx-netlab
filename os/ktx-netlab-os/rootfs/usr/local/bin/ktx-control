@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+xfce4-terminal --title="KTX Control" --hold --command="bash -lc 'ktx tui'"

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Wireshark
+Comment=Open Wireshark packet analyzer
+Exec=wireshark
+Icon=wireshark
+Terminal=false
+Categories=Network;

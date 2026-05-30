@@ -2,38 +2,61 @@
 
 ## Definition
 
-KTX NetLab OS is an Arch-based installed network lab operating environment. It uses Arch Linux as the base system and adds a custom KTX layer for network diagnostics, SSH operations, Docker networking, service monitoring, lab documentation, and future reproducible ISO builds.
+KTX NetLab OS is an Arch-based installed network lab operating environment.
 
-## Current build type
+It uses Arch Linux as the base and adds a KTX layer for:
 
-This version is an installed OS layer, not yet a separate ISO.
+- portfolio proof
+- network diagnostics
+- IT support practice
+- router lab preparation
+- cybersecurity lab preparation
+- SSH operations
+- Docker networking
+- service monitoring
+- GUI appliance workflow
 
-## Base
+## Desktop direction
 
-- Base system: Arch Linux
-- Kernel: Linux LTS
-- Target hardware: Dell Inspiron N5040
-- Hostname: ktx-netlab
-- Main user: kirch
+The GUI layer uses XFCE with minimal clean enterprise customization. The desktop should feel like a practical network appliance, not a generic Arch desktop.
 
-## KTX additions
+## Core launchers
 
-- `/etc/ktx-release`
-- `/usr/local/bin/ktx`
-- `/usr/local/bin/ktx-welcome`
-- `/etc/profile.d/ktx-netlab.sh`
-- `/etc/systemd/system/ktx-netlab-bootcheck.service`
-- Package manifest
-- Git-tracked OS documentation
+- KTX Control
+- Terminal
+- Wireshark
+- Network Settings
+- KTX Logs
+- GitHub Repo
+- Packet Tracer placeholder
+- Browser
 
-## Core command
+## Operating modes
 
-    ktx help
+Current modes:
 
-## Purpose
+- Lab Mode
+- Sensor Mode
+- Router Mode dry-run
+- Recovery Mode dry-run
 
-KTX NetLab OS is designed for hands-on network operations, Linux administration, troubleshooting practice, Cisco-style learning, and infrastructure portfolio proof.
+Router mode is intentionally locked until USB Ethernet interface detection is confirmed.
 
-## Next version target
+## Planned router architecture
 
-v0.2 should add reproducible Arch ISO/build profile using archiso.
+WAN:
+
+- built-in Ethernet interface: enp19s0
+- DHCP from upstream router/repeater
+
+LAN:
+
+- USB Ethernet adapter
+- static KTX router IP: 10.10.10.1/24
+- DHCP range: 10.10.10.100 - 10.10.10.200
+- dnsmasq for DHCP/DNS
+- nftables for firewall/NAT
+
+## Safety rule
+
+Router mode must never be enabled blindly. Recovery mode must always exist before real router mode is activated.

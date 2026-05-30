@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KTX GitHub Repo
+Comment=Open KTX NetLab GitHub repository
+Exec=xdg-open https://github.com/DevN4iru/ktx-netlab
+Icon=applications-internet
+Terminal=false
+Categories=Network;Development;

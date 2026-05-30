@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KTX Logs
+Comment=Open KTX NetLab logs
+Exec=thunar /var/log/ktx-netlab
+Icon=folder
+Terminal=false
+Categories=System;

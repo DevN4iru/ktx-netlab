@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+set -u
+
+MODE_FILE="/etc/ktx-mode"
+LOG="/var/log/ktx-netlab/mode.log"
+
+log_mode() {
+  sudo install -d -m 0755 /var/log/ktx-netlab
+  echo "$(date '+%F %T') mode=$1 user=$(whoami)" | sudo tee -a "$LOG" >/dev/null
+}
+
+set_mode_file() {
+  echo "$1" | sudo tee "$MODE_FILE" >/dev/null
+  log_mode "$1"
+}
+
+status_mode() {
+  echo "Current KTX mode: $(cat "$MODE_FILE" 2>/dev/null || echo lab)"
+  echo
+  echo "Detected network interfaces:"
+  ip -br link
+  echo
+  echo "Routes:"
+  ip route
+}
+
+mode_lab() {
+  set_mode_file "lab"
+  cat <<'MSG'
+KTX mode set to: lab
+
+Safe default mode:
+- DHCP client stays active
+- SSH stays active
+- Docker/Caddy stay available
+- No routing/NAT/DHCP server changes
+MSG
+}
+
+mode_sensor() {
+  set_mode_file "sensor"
+  cat <<'MSG'
+KTX mode set to: sensor
+
+Sensor mode behavior:
+- No routing
+- No NAT
+- No DHCP server
+- Wireshark/tcpdump ready for manual diagnostics
+- Packet capture is manual only
+
+Example:
+  sudo tcpdump -i enp19s0 -nn
+MSG
+}
+
+mode_router() {
+  cat <<'MSG'
+KTX Router Mode — DRY RUN ONLY
+
+Planned wired-router architecture:
+
+  Upstream router/repeater
+          |
+          | WAN: built-in Ethernet enp19s0 via DHCP
+          |
+    KTX NetLab OS
+          |
+          | LAN: USB Ethernet adapter
+          |
+    test device / switch / lab LAN
+
+Planned LAN:
+  KTX router IP: 10.10.10.1/24
+  DHCP range:    10.10.10.100 - 10.10.10.200
+  Firewall:      nftables
+  DHCP/DNS:      dnsmasq
+  NAT:           enabled
+
+Real apply is locked until USB Ethernet audit is completed.
+
+Run this after plugging USB Ethernet:
+  ip -br link
+  ip -br addr
+  lsusb
+MSG
+}
+
+mode_recovery() {
+  cat <<'MSG'
+KTX Recovery Mode — DRY RUN ONLY
+
+Planned recovery behavior:
+- Disable router NAT
+- Disable custom DHCP server
+- Disable custom AP service
+- Restore safe DHCP client on WAN interface
+- Keep SSH reachable
+- Return to Lab Mode
+
+Real apply will be added after router mode is implemented.
+MSG
+}
+
+menu_mode() {
+  while true; do
+    clear
+    echo "KTX Mode Manager"
+    echo
+    status_mode
+    echo
+    echo "1) Lab mode"
+    echo "2) Sensor mode"
+    echo "3) Router mode dry-run"
+    echo "4) Recovery mode dry-run"
+    echo "0) Back"
+    echo
+    read -rp "mode> " choice
+
+    case "$choice" in
+      1) mode_lab ;;
+      2) mode_sensor ;;
+      3) mode_router ;;
+      4) mode_recovery ;;
+      0) exit 0 ;;
+      *) echo "Invalid choice" ;;
+    esac
+
+    echo
+    read -rp "Press Enter to continue..."
+  done
+}
+
+case "${1:-status}" in
+  status) status_mode ;;
+  lab) mode_lab ;;
+  sensor) mode_sensor ;;
+  router|router-wired) mode_router ;;
+  recovery) mode_recovery ;;
+  menu) menu_mode ;;
+  *) echo "Usage: ktx-mode {status|lab|sensor|router|recovery|menu}"; exit 1 ;;
+esac
