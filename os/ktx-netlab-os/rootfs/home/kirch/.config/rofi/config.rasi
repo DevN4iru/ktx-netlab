@@ -1,0 +1,71 @@
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    font: "Noto Sans 10";
+    display-drun: "Apps";
+    display-run: "Run";
+    display-window: "Windows";
+}
+
+* {
+    bg: #0b0f14;
+    panel: #111418;
+    text: #e5e7eb;
+    muted: #64748b;
+    accent: #9f1239;
+    cyan: #38bdf8;
+}
+
+window {
+    width: 42%;
+    border: 2px;
+    border-color: @accent;
+    background-color: @bg;
+}
+
+mainbox {
+    background-color: @bg;
+    padding: 12px;
+}
+
+inputbar {
+    background-color: @panel;
+    text-color: @text;
+    padding: 10px;
+    border: 1px;
+    border-color: @muted;
+}
+
+prompt {
+    text-color: @cyan;
+}
+
+entry {
+    text-color: @text;
+}
+
+listview {
+    background-color: @bg;
+    lines: 10;
+    columns: 1;
+    fixed-height: false;
+}
+
+element {
+    padding: 8px;
+    background-color: @bg;
+    text-color: @text;
+}
+
+element selected {
+    background-color: @accent;
+    text-color: @text;
+}
+
+element-icon {
+    size: 22px;
+}
+
+element-text {
+    text-color: inherit;
+}

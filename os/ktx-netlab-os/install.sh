@@ -50,6 +50,8 @@ sudo chmod +x /usr/local/bin/ktx-folders-apply
 sudo chmod +x /usr/local/bin/ktx-apps-apply
 sudo chmod +x /usr/local/bin/ktx-about
 sudo chmod +x /usr/local/bin/ktx-fetch
+sudo chmod +x /usr/local/bin/ktx-version
+sudo chmod +x /usr/local/bin/ktx-doctor
 
 sudo chmod 0644 /etc/ktx-release
 sudo chmod 0644 /etc/issue
@@ -61,6 +63,19 @@ sudo mkdir -p /home/kirch/.config
 sudo chown -R kirch:kirch /home/kirch/Desktop
 sudo chown -R kirch:kirch /home/kirch/.config
 find /home/kirch/Desktop -name "*.desktop" -exec chmod +x {} \; 2>/dev/null || true
+
+
+# KTX i3 shell permissions
+for f in \
+  /usr/local/bin/ktx-i3-session \
+  /usr/local/bin/ktx-i3-splash \
+  /usr/local/bin/ktx-i3-info \
+  /usr/local/bin/ktx-i3-apply
+do
+  if [ -e "$f" ]; then
+    sudo chmod +x "$f"
+  fi
+done
 
 echo "===== SYSTEMD ====="
 sudo systemctl daemon-reload

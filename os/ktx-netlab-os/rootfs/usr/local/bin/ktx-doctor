@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+set -u
+
+FAIL=0
+
+ok() {
+  printf "[ OK ] %s\n" "$*"
+}
+
+warn() {
+  printf "[WARN] %s\n" "$*"
+}
+
+bad() {
+  printf "[FAIL] %s\n" "$*"
+  FAIL=1
+}
+
+check_file() {
+  [ -e "$1" ] && ok "$1 exists" || bad "$1 missing"
+}
+
+check_exec() {
+  [ -x "$1" ] && ok "$1 executable" || bad "$1 missing or not executable"
+}
+
+check_cmd() {
+  command -v "$1" >/dev/null 2>&1 && ok "command found: $1" || bad "command missing: $1"
+}
+
+check_service_active() {
+  if systemctl is-active "$1" >/dev/null 2>&1; then
+    ok "service active: $1"
+  else
+    bad "service not active: $1"
+  fi
+}
+
+check_service_optional() {
+  if systemctl is-active "$1" >/dev/null 2>&1; then
+    ok "optional service active: $1"
+  else
+    warn "optional service inactive: $1"
+  fi
+}
+
+echo "===== KTX NETLAB OS DOCTOR ====="
+date
+echo
+
+echo "===== RELEASE / IDENTITY ====="
+check_file /etc/ktx-release
+check_file /etc/ktx-mode
+check_file /etc/motd
+check_file /etc/issue
+echo
+
+echo "===== CORE COMMANDS ====="
+check_exec /usr/local/bin/ktx
+check_exec /usr/local/bin/ktx-welcome
+check_exec /usr/local/bin/ktx-mode
+check_exec /usr/local/bin/ktx-fetch
+check_exec /usr/local/bin/ktx-about
+check_exec /usr/local/bin/ktx-version
+check_exec /usr/local/bin/ktx-desktop-apply
+check_exec /usr/local/bin/ktx-panel-apply
+check_exec /usr/local/bin/ktx-shell-apply
+check_exec /usr/local/bin/ktx-terminal-apply
+check_exec /usr/local/bin/ktx-folders-apply
+check_exec /usr/local/bin/ktx-apps-apply
+echo
+
+echo "===== SYSTEM COMMANDS ====="
+for cmd in ip ping dig git fastfetch systemctl xfce4-terminal thunar firefox; do
+  check_cmd "$cmd"
+done
+echo
+
+echo "===== DESKTOP STACK ====="
+check_file /usr/share/xsessions/ktx-netlab.desktop
+check_file /etc/lightdm/lightdm-gtk-greeter.conf.d/99-ktx-netlab.conf
+check_service_active lightdm
+echo
+
+echo "===== CORE SERVICES ====="
+check_service_active NetworkManager
+check_service_active sshd
+check_service_active docker
+check_service_active caddy
+check_service_optional nftables
+check_service_optional dnsmasq
+check_service_optional hostapd
+echo
+
+echo "===== USER WORKSPACE ====="
+check_file /home/kirch/Desktop
+check_file /home/kirch/.config
+check_file /home/kirch/NetLab
+check_file /home/kirch/Projects/ktx-netlab
+check_file /home/kirch/.config/fastfetch/config.jsonc
+echo
+
+echo "===== NETWORK QUICK VIEW ====="
+ip -br addr || true
+echo
+ip route || true
+echo
+
+if [ "$FAIL" -eq 0 ]; then
+  echo "KTX Doctor result: PASS"
+  exit 0
+else
+  echo "KTX Doctor result: FAIL"
+  exit 1
+fi

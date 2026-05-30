@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mkdir -p "$HOME/.config/i3" "$HOME/.config/i3status" "$HOME/.config/rofi" "$HOME/.config/dunst" "$HOME/.config/picom"
+
+find "$HOME/.config/i3" "$HOME/.config/i3status" "$HOME/.config/rofi" "$HOME/.config/dunst" "$HOME/.config/picom" -type f -exec chmod 0644 {} \; 2>/dev/null || true
+
+if command -v feh >/dev/null 2>&1; then
+  feh --bg-fill /usr/share/backgrounds/ktx-netlab/ktx-i3-rogue.svg 2>/dev/null || true
+fi
+
+echo "KTX i3 shell config applied."
+echo
+ktx-i3-info

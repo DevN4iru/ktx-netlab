@@ -162,8 +162,12 @@ Usage:
   ktx terminal apply  Apply KTX terminal profile
   ktx folders apply   Create KTX NetLab OS folders
   ktx apps apply      Apply default applications and bookmarks
+  ktx i3 info         Show KTX i3 shell info
+  ktx i3 apply        Apply KTX i3 shell config
   ktx about           Show KTX NetLab OS about screen
   ktx fetch           Show KTX fastfetch identity
+  ktx version         Show KTX NetLab OS version
+  ktx doctor          Check KTX NetLab OS health
   ktx polish          Apply shell, terminal, folders, desktop, panel, apps
   ktx audit           Run full KTX NetLab audit
   ktx repo            Show Git repo status and latest commits
@@ -236,8 +240,20 @@ case "${1:-help}" in
       *) echo "Usage: ktx apps {info|apply}"; exit 1 ;;
     esac
     ;;
+
+  i3)
+    shift || true
+    case "${1:-info}" in
+      info) /usr/local/bin/ktx-i3-info ;;
+      apply) /usr/local/bin/ktx-i3-apply ;;
+      *) echo "Usage: ktx i3 {info|apply}"; exit 1 ;;
+    esac
+    ;;
+
   about) /usr/local/bin/ktx-about ;;
   fetch) /usr/local/bin/ktx-fetch ;;
+  version) /usr/local/bin/ktx-version ;;
+  doctor) /usr/local/bin/ktx-doctor ;;
 
   audit) cmd_audit ;;
   repo) cmd_repo ;;

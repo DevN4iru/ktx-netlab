@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+echo "KTX NetLab OS"
+echo
+
+if [ -f /etc/ktx-release ]; then
+  cat /etc/ktx-release
+fi
+
+echo
+echo "Installed files:"
+echo "  Release file : /etc/ktx-release"
+echo "  Mode file    : /etc/ktx-mode"
+echo "  Command      : /usr/local/bin/ktx"
+echo "  Workspace    : ~/NetLab"
+
+echo
+echo "Base system:"
+cat /etc/os-release | grep -E '^(PRETTY_NAME|ID)=' || true
+echo "Kernel=$(uname -r)"

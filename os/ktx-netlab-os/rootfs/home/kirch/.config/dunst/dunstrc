@@ -1,0 +1,37 @@
+[global]
+    monitor = 0
+    follow = mouse
+    width = 360
+    height = 120
+    origin = top-right
+    offset = 16x42
+    padding = 12
+    horizontal_padding = 12
+    frame_width = 2
+    separator_height = 2
+    font = Noto Sans 10
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    show_age_threshold = 60
+    word_wrap = yes
+    ignore_newline = no
+    transparency = 0
+    corner_radius = 6
+    frame_color = "#9f1239"
+    separator_color = "#64748b"
+
+[urgency_low]
+    background = "#0b0f14"
+    foreground = "#e5e7eb"
+    timeout = 4
+
+[urgency_normal]
+    background = "#111418"
+    foreground = "#e5e7eb"
+    timeout = 6
+
+[urgency_critical]
+    background = "#9f1239"
+    foreground = "#ffffff"
+    timeout = 0

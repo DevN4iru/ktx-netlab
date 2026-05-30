@@ -1,0 +1,36 @@
+general {
+    colors = true
+    interval = 2
+    output_format = "i3bar"
+    color_good = "#38bdf8"
+    color_degraded = "#f59e0b"
+    color_bad = "#ef4444"
+}
+
+order += "ethernet enp19s0"
+order += "disk /"
+order += "load"
+order += "battery 0"
+order += "tztime local"
+
+ethernet enp19s0 {
+    format_up = "LAN %ip"
+    format_down = "LAN down"
+}
+
+disk "/" {
+    format = "DISK %avail"
+}
+
+load {
+    format = "LOAD %1min"
+}
+
+battery 0 {
+    format = "BAT %percentage %status"
+    low_threshold = 20
+}
+
+tztime local {
+    format = "%a %d %b %H:%M"
+}

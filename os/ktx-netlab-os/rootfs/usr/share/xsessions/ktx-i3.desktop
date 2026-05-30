@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=KTX i3 Lab
+Comment=KTX NetLab OS tiling shell session
+Exec=/usr/local/bin/ktx-i3-session
+TryExec=/usr/local/bin/ktx-i3-session
+Type=Application
+DesktopNames=i3

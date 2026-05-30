@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0b0f14"/>
+      <stop offset="55%" stop-color="#111418"/>
+      <stop offset="100%" stop-color="#151015"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+
+  <g opacity="0.18" stroke="#9f1239" stroke-width="2" fill="none">
+    <path d="M112 836 C 420 650, 650 790, 900 610 S 1390 450, 1780 220"/>
+    <path d="M160 900 C 470 710, 740 850, 1000 665 S 1450 520, 1810 330"/>
+  </g>
+
+  <g opacity="0.15" stroke="#38bdf8" stroke-width="1" fill="none">
+    <path d="M128 192 H650 V256 H980 V192 H1300"/>
+    <path d="M128 232 H420 V312 H810 V278 H1180"/>
+    <circle cx="128" cy="192" r="5" fill="#38bdf8"/>
+    <circle cx="650" cy="256" r="5" fill="#38bdf8"/>
+    <circle cx="980" cy="192" r="5" fill="#38bdf8"/>
+    <circle cx="1300" cy="192" r="5" fill="#38bdf8"/>
+  </g>
+
+  <text x="92" y="116" fill="#e5e7eb" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="600">KTX NetLab OS</text>
+  <text x="94" y="166" fill="#9ca3af" font-family="Inter, Arial, sans-serif" font-size="24">i3 Shell · clean enterprise rogue workflow</text>
+
+  <text x="94" y="958" fill="#64748b" font-family="DejaVu Sans Mono, monospace" font-size="20">Super+Enter Terminal · Super+D Launcher · Super+X KTX Control · Super+W Wireshark</text>
+  <text x="94" y="992" fill="#475569" font-family="DejaVu Sans Mono, monospace" font-size="18">Router mode locked · Lab mode active</text>
+</svg>

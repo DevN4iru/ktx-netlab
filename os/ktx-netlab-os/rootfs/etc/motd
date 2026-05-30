@@ -1,0 +1,15 @@
+KTX NetLab OS v0.1.0
+
+Arch-based network lab operating environment.
+
+Main commands:
+  ktx status
+  ktx net
+  ktx mode status
+  ktx desktop info
+  ktx fetch
+  ktx doctor
+  ktx audit
+
+Workspace:
+  ~/NetLab
