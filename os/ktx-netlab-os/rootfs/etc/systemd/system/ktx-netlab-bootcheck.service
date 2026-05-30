@@ -1,0 +1,14 @@
+[Unit]
+Description=KTX NetLab OS boot network and service check
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/install -d -m 0755 /var/log/ktx-netlab
+ExecStart=/usr/local/bin/ktx net
+StandardOutput=append:/var/log/ktx-netlab/bootcheck.log
+StandardError=append:/var/log/ktx-netlab/bootcheck.log
+
+[Install]
+WantedBy=multi-user.target

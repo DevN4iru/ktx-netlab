@@ -1,0 +1,8 @@
+NAME="KTX NetLab OS"
+VERSION="0.1"
+CODENAME="first-wire"
+BASE="Arch Linux"
+TYPE="Arch-based network lab operating environment"
+PURPOSE="Network diagnostics, Linux administration, SSH operations, Docker networking, Cisco-style learning, and infrastructure practice"
+DEVICE="Dell Inspiron N5040"
+MAINTAINER="Kirch Ivan A. Balite / DevN4iru"

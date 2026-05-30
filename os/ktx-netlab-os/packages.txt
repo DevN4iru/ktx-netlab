@@ -1,0 +1,47 @@
+# KTX NetLab OS v0.1 package manifest
+# Base
+base
+linux-lts
+linux-firmware
+grub
+sudo
+
+# Network core
+networkmanager
+openssh
+bind
+nmap
+tcpdump
+traceroute
+whois
+iperf3
+net-tools
+wireshark-qt
+
+# System tools
+git
+base-devel
+rsync
+unzip
+zip
+tmux
+vim
+nano
+btop
+fastfetch
+
+# Services
+docker
+docker-compose
+caddy
+
+# Desktop
+xfce4
+lightdm
+lightdm-gtk-greeter
+
+# Dev/runtime
+python
+nodejs
+pnpm
+sqlite

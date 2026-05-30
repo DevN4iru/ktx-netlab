@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+set -u
+
+REPO="/home/kirch/Projects/ktx-netlab"
+RELEASE="/etc/ktx-release"
+
+section() {
+  echo
+  echo "===== $* ====="
+}
+
+show_release() {
+  section "KTX NETLAB OS"
+  if [ -f "$RELEASE" ]; then
+    cat "$RELEASE"
+  else
+    echo "KTX NetLab OS release file missing: $RELEASE"
+  fi
+}
+
+cmd_status() {
+  show_release
+  section "HOST"
+  hostnamectl | sed -n '1,12p'
+  section "UPTIME"
+  uptime
+  section "MEMORY"
+  free -h
+  section "DISK"
+  df -hT /
+  section "NETWORK"
+  ip -br addr
+  section "ROUTE"
+  ip route
+  section "SERVICES"
+  for svc in NetworkManager sshd docker caddy lightdm; do
+    printf "%-18s" "$svc"
+    systemctl is-active "$svc" 2>/dev/null || true
+  done
+}
+
+cmd_net() {
+  section "INTERFACES"
+  ip -br link
+  echo
+  ip -br addr
+
+  section "ROUTES"
+  ip route
+
+  section "DNS"
+  cat /etc/resolv.conf
+  echo
+  dig archlinux.org +short || true
+
+  section "GATEWAY TEST"
+  ping -c 4 192.168.254.254 || true
+
+  section "PUBLIC IP TEST"
+  ping -c 4 1.1.1.1 || true
+
+  section "DOMAIN TEST"
+  ping -c 4 archlinux.org || true
+}
+
+cmd_services() {
+  section "SERVICE STATUS"
+  for svc in NetworkManager sshd docker caddy lightdm ktx-netlab-bootcheck; do
+    echo
+    echo "--- $svc ---"
+    systemctl status "$svc" --no-pager -l 2>/dev/null | sed -n '1,12p' || true
+  done
+}
+
+cmd_audit() {
+  if [ -x "$REPO/scripts/ktx-netlab-audit.sh" ]; then
+    cd "$REPO" || exit 1
+    ./scripts/ktx-netlab-audit.sh
+  else
+    echo "Audit script not found: $REPO/scripts/ktx-netlab-audit.sh"
+    exit 1
+  fi
+}
+
+cmd_repo() {
+  if [ -d "$REPO/.git" ]; then
+    cd "$REPO" || exit 1
+    section "GIT STATUS"
+    git status -sb
+    section "LAST COMMITS"
+    git log --oneline -5
+  else
+    echo "Repo not found: $REPO"
+    exit 1
+  fi
+}
+
+cmd_logs() {
+  section "KTX LOGS"
+  ls -lah /var/log/ktx-netlab 2>/dev/null || true
+
+  section "LATEST BOOTCHECK"
+  tail -n 80 /var/log/ktx-netlab/bootcheck.log 2>/dev/null || true
+
+  section "LATEST REPO AUDITS"
+  find "$REPO/logs/netlab-audits" -type f 2>/dev/null | sort | tail -n 5 || true
+}
+
+cmd_tui() {
+  while true; do
+    clear
+    /usr/local/bin/ktx-welcome
+    echo
+    echo "1) Status"
+    echo "2) Network test"
+    echo "3) Services"
+    echo "4) Audit"
+    echo "5) Repo status"
+    echo "6) Logs"
+    echo "0) Exit"
+    echo
+    read -rp "ktx> " choice
+
+    case "$choice" in
+      1) cmd_status ;;
+      2) cmd_net ;;
+      3) cmd_services ;;
+      4) cmd_audit ;;
+      5) cmd_repo ;;
+      6) cmd_logs ;;
+      0) exit 0 ;;
+      *) echo "Invalid choice" ;;
+    esac
+
+    echo
+    read -rp "Press Enter to continue..."
+  done
+}
+
+cmd_help() {
+  cat <<HELP
+KTX NetLab OS command center
+
+Usage:
+  ktx status      Show OS, host, memory, disk, network, services
+  ktx net         Run network diagnostics
+  ktx services    Show core service status
+  ktx audit       Run full KTX NetLab audit
+  ktx repo        Show Git repo status and latest commits
+  ktx logs        Show KTX logs
+  ktx tui         Open terminal control menu
+  ktx release     Show release identity
+  ktx help        Show this help
+HELP
+}
+
+case "${1:-help}" in
+  status) cmd_status ;;
+  net) cmd_net ;;
+  services) cmd_services ;;
+  audit) cmd_audit ;;
+  repo) cmd_repo ;;
+  logs) cmd_logs ;;
+  tui) cmd_tui ;;
+  release) show_release ;;
+  help|-h|--help) cmd_help ;;
+  *) echo "Unknown command: $1"; echo; cmd_help; exit 1 ;;
+esac
