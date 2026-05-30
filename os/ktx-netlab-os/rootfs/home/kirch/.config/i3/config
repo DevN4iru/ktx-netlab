@@ -1,17 +1,16 @@
-# KTX NetLab OS i3 Shell v0.1
-# Clean enterprise rogue tiling workflow
+# KTX NetLab OS - i3 Core v0.2
+# Clean enterprise rogue shell, stability-first
 
 set $mod Mod4
 set $term xfce4-terminal
 set $browser firefox
 set $files thunar
 set $launcher rofi -show drun -show-icons
-set $wall /usr/share/backgrounds/ktx-netlab/ktx-i3-rogue.svg
+set $wall /usr/share/backgrounds/ktx-netlab/ktx-wallpaper-mountain.jpg
 
 font pango:Noto Sans 10
 floating_modifier $mod
 
-# Colors
 set $bg        #0b0f14
 set $panel     #111418
 set $text      #e5e7eb
@@ -20,78 +19,69 @@ set $accent    #38bdf8
 set $rogue     #9f1239
 set $urgent    #ef4444
 
-client.focused          $rogue  $rogue  $text  $accent $rogue
-client.focused_inactive $panel  $panel  $text  $muted  $panel
-client.unfocused        $panel  $panel  $muted $muted  $panel
-client.urgent           $urgent $urgent $text  $urgent $urgent
-client.placeholder      $panel  $panel  $text  $panel  $panel
+client.focused          $accent $accent $bg   $rogue $accent
+client.focused_inactive $panel  $panel  $text $muted $panel
+client.unfocused        $panel  $panel  $muted $muted $panel
+client.urgent           $urgent $urgent $text $urgent $urgent
 
 default_border pixel 2
 default_floating_border pixel 2
 hide_edge_borders smart
-
-# Gaps: i3 4.22+ supports this
-gaps inner 8
-gaps outer 4
+gaps inner 6
+gaps outer 2
 smart_gaps on
 
-# Startup
+# Stability-first startup. No compositor. No Deskflow. No notification daemon.
 exec_always --no-startup-id feh --bg-fill $wall
 exec --no-startup-id sh -c 'pgrep -x nm-applet || nm-applet'
-exec --no-startup-id sh -c 'pgrep -x dunst || dunst'
-exec --no-startup-id sh -c 'pgrep -x picom || picom --config "$HOME/.config/picom/picom.conf" -b'
 exec --no-startup-id sh -c 'pgrep -f polkit-gnome-authentication-agent-1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
-exec --no-startup-id /usr/local/bin/ktx-i3-splash
-exec --no-startup-id /usr/local/bin/ktx-deskflow-autostart
 
-# Core navigation
+# Basics
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $launcher
-
-# KTX friendly navigation
-bindsym $mod+q move scratchpad
-bindsym $mod+Shift+q kill
 bindsym $mod+slash exec /usr/local/bin/ktx-i3-nav
-bindsym $mod+Escape exec /usr/local/bin/ktx-i3-power
-bindsym Mod1+Tab focus right
-bindsym Mod1+Shift+Tab focus left
-bindsym $mod+Tab focus right
-bindsym $mod+Shift+Tab focus left
-bindsym $mod+Shift+r restart
-bindsym $mod+Shift+c reload
 
-# KTX convenience launchers
-bindsym $mod+x exec ktx-control
-bindsym $mod+Control+k exec ktx-control
+# Friendly window behavior
+bindsym $mod+q move scratchpad
+bindsym $mod+minus scratchpad show
+bindsym $mod+Shift+q kill
+
+# Reload/restart only. No direct logout bind.
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# App launchers
+bindsym $mod+x exec xfce4-terminal --title="KTX Control" --command="bash -lc 'ktx tui'"
 bindsym $mod+w exec wireshark
 bindsym $mod+n exec nm-connection-editor
 bindsym $mod+f exec $files
 bindsym $mod+b exec $browser
-bindsym $mod+Shift+Return exec xfce4-terminal --title="KTX Control" --command="bash -lc 'ktx tui'"
 
 # Focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
 
 # Move windows
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# Splits and layouts
+# Layouts
 bindsym $mod+v split v
 bindsym $mod+c split h
 bindsym $mod+s layout stacking
@@ -100,10 +90,6 @@ bindsym $mod+e layout toggle split
 bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+m fullscreen toggle
-
-# Scratchpad
-bindsym $mod+minus scratchpad show
-bindsym $mod+Shift+minus move scratchpad
 
 # Workspaces
 set $ws1 "1:term"
@@ -136,32 +122,24 @@ bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 
-# Resize mode
 mode "resize" {
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize grow height 10 px or 10 ppt
     bindsym k resize shrink height 10 px or 10 ppt
     bindsym l resize grow width 10 px or 10 ppt
-
     bindsym Left resize shrink width 10 px or 10 ppt
     bindsym Down resize grow height 10 px or 10 ppt
     bindsym Up resize shrink height 10 px or 10 ppt
     bindsym Right resize grow width 10 px or 10 ppt
-
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
 }
 bindsym $mod+r mode "resize"
 
-# Floating rules
-for_window [class="Pavucontrol"] floating enable
 for_window [class="Nm-connection-editor"] floating enable
 for_window [title="KTX Control"] floating enable, resize set 900 600, move position center
-for_window [title="About KTX NetLab OS"] floating enable, resize set 860 560, move position center
-for_window [title="KTX System Info"] floating enable, resize set 900 620, move position center
+for_window [title="KTX i3 Help"] floating enable, resize set 900 650, move position center
 
-# Bar
 bar {
     status_command i3status -c ~/.config/i3status/config
     position top
@@ -172,10 +150,9 @@ bar {
         background $bg
         statusline $text
         separator  $muted
-
-        focused_workspace  $rogue $rogue $text
-        active_workspace   $panel $panel $text
-        inactive_workspace $bg    $bg    $muted
+        focused_workspace  $accent $accent $bg
+        active_workspace   $panel  $panel  $text
+        inactive_workspace $bg     $bg     $muted
         urgent_workspace   $urgent $urgent $text
     }
 }

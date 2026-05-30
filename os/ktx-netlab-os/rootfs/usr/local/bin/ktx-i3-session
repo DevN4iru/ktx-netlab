@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
-export KTX_SESSION=i3
+
+LOG="$HOME/.ktx-i3-session.log"
+
+{
+  echo "===== KTX I3 CORE SESSION START ====="
+  date
+  echo "USER=$USER"
+  echo "HOME=$HOME"
+  echo "DISPLAY=$DISPLAY"
+  echo "DESKTOP_SESSION=$DESKTOP_SESSION"
+  echo "XDG_CURRENT_DESKTOP=$XDG_CURRENT_DESKTOP"
+  echo "XDG_SESSION_DESKTOP=$XDG_SESSION_DESKTOP"
+  echo
+} >> "$LOG" 2>&1
+
+export KTX_SESSION=i3-core
+export DESKTOP_SESSION=ktx-i3
 export XDG_CURRENT_DESKTOP=i3
-export XDG_SESSION_DESKTOP=KTX-i3-Lab
-exec i3
+export XDG_SESSION_DESKTOP=ktx-i3
+export LIBGL_DRI3_DISABLE=1
+
+exec /usr/bin/i3 -c "$HOME/.config/i3/config" >> "$LOG" 2>&1
