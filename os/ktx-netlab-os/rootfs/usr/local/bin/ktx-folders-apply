@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mkdir -p "$HOME/NetLab"/{Audits,Logs,Reports,Captures,Router-Lab,Cisco-Labs,Scripts}
+mkdir -p "$HOME/Desktop"
+
+ln -sfn "$HOME/Projects/ktx-netlab" "$HOME/NetLab/Repository"
+ln -sfn "/var/log/ktx-netlab" "$HOME/NetLab/System-Logs"
+
+echo "KTX NetLab folders applied:"
+find "$HOME/NetLab" -maxdepth 1 -mindepth 1 -printf "  %f\n" | sort

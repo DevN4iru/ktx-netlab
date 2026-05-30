@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BASHRC="$HOME/.bashrc"
+KTX_BLOCK_START="# >>> KTX NetLab OS shell >>>"
+KTX_BLOCK_END="# <<< KTX NetLab OS shell <<<"
+
+touch "$BASHRC"
+
+python - "$BASHRC" <<'PY'
+from pathlib import Path
+import sys
+
+p = Path(sys.argv[1])
+s = p.read_text()
+
+start = "# >>> KTX NetLab OS shell >>>"
+end = "# <<< KTX NetLab OS shell <<<"
+
+block = r'''
+# >>> KTX NetLab OS shell >>>
+# KTX NetLab OS interactive shell layer
+
+export KTX_NETLAB_OS=1
+export EDITOR=nano
+
+alias ktx-status='ktx status'
+alias ktx-net='ktx net'
+alias ktx-mode='ktx mode status'
+alias ktx-audit='ktx audit'
+alias ktx-repo='ktx repo'
+alias ktx-logs='ktx logs'
+alias ll='ls -lah'
+alias ports='ss -tunlp'
+alias myip='ip -br addr'
+alias gw='ip route | grep default'
+
+ktx_prompt() {
+  local exit_code="$?"
+  PS1="\[\e[1;36m\]KTX\[\e[0m\] \[\e[1;32m\]\u@ktx-netlab\[\e[0m\] \[\e[1;34m\]\W\[\e[0m\] \$ "
+  return "$exit_code"
+}
+
+PROMPT_COMMAND=ktx_prompt
+# <<< KTX NetLab OS shell <<<
+'''.strip() + "\n"
+
+if start in s and end in s:
+    before = s.split(start)[0].rstrip()
+    after = s.split(end)[1].lstrip()
+    s = before + "\n\n" + block + "\n" + after
+else:
+    s = s.rstrip() + "\n\n" + block
+
+p.write_text(s)
+PY
+
+echo "KTX shell layer applied."
+echo "Restart terminal or run: source ~/.bashrc"

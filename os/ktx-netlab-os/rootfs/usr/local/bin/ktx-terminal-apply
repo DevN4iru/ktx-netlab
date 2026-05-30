@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mkdir -p "$HOME/.config/xfce4/terminal"
+
+cat > "$HOME/.config/xfce4/terminal/terminalrc" <<'TERMINAL'
+[Configuration]
+FontName=DejaVu Sans Mono 10
+MiscMenubarDefault=FALSE
+MiscToolbarDefault=FALSE
+MiscBordersDefault=TRUE
+MiscBell=FALSE
+ScrollingBar=TERMINAL_SCROLLBAR_RIGHT
+ScrollingUnlimited=TRUE
+ColorForeground=#E5E7EB
+ColorBackground=#111418
+ColorCursor=#E5E7EB
+ColorPalette=#000000;#CC0000;#4E9A06;#C4A000;#3465A4;#75507B;#06989A;#D3D7CF;#555753;#EF2929;#8AE234;#FCE94F;#729FCF;#AD7FA8;#34E2E2;#EEEEEC
+TERMINAL
+
+echo "KTX terminal profile applied."

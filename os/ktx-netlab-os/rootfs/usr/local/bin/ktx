@@ -157,6 +157,11 @@ Usage:
   ktx mode recovery   Show recovery-mode dry run
   ktx desktop         Show DE/WM desktop stack
   ktx desktop apply   Apply DE/WM desktop profile
+  ktx panel apply     Apply XFCE appliance panel
+  ktx shell apply     Apply KTX shell identity
+  ktx terminal apply  Apply KTX terminal profile
+  ktx folders apply   Create KTX NetLab OS folders
+  ktx polish          Apply shell, terminal, folders, desktop, panel
   ktx audit           Run full KTX NetLab audit
   ktx repo            Show Git repo status and latest commits
   ktx logs            Show KTX logs
@@ -179,6 +184,47 @@ case "${1:-help}" in
       *) echo "Usage: ktx desktop {info|apply}"; exit 1 ;;
     esac
     ;;
+
+  panel)
+    shift || true
+    case "${1:-info}" in
+      apply) /usr/local/bin/ktx-panel-apply ;;
+      info) echo "KTX panel: XFCE panel with Whisker Menu, tasklist, tray, clock, actions" ;;
+      *) echo "Usage: ktx panel {info|apply}"; exit 1 ;;
+    esac
+    ;;
+  shell)
+    shift || true
+    case "${1:-info}" in
+      apply) /usr/local/bin/ktx-shell-apply ;;
+      info) echo "KTX shell: prompt, aliases, helper commands" ;;
+      *) echo "Usage: ktx shell {info|apply}"; exit 1 ;;
+    esac
+    ;;
+  terminal)
+    shift || true
+    case "${1:-info}" in
+      apply) /usr/local/bin/ktx-terminal-apply ;;
+      info) echo "KTX terminal: XFCE terminal profile" ;;
+      *) echo "Usage: ktx terminal {info|apply}"; exit 1 ;;
+    esac
+    ;;
+  folders)
+    shift || true
+    case "${1:-info}" in
+      apply) /usr/local/bin/ktx-folders-apply ;;
+      info) echo "KTX folders: ~/NetLab workspace structure" ;;
+      *) echo "Usage: ktx folders {info|apply}"; exit 1 ;;
+    esac
+    ;;
+  polish)
+    /usr/local/bin/ktx-shell-apply
+    /usr/local/bin/ktx-terminal-apply
+    /usr/local/bin/ktx-folders-apply
+    /usr/local/bin/ktx-desktop-apply --force
+    /usr/local/bin/ktx-panel-apply
+    ;;
+
   audit) cmd_audit ;;
   repo) cmd_repo ;;
   logs) cmd_logs ;;

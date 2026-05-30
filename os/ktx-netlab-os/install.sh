@@ -43,6 +43,10 @@ sudo chmod +x /usr/local/bin/ktx-packettracer-placeholder
 sudo chmod +x /usr/local/bin/ktx-session
 sudo chmod +x /usr/local/bin/ktx-desktop-apply
 sudo chmod +x /usr/local/bin/ktx-desktop-info
+sudo chmod +x /usr/local/bin/ktx-shell-apply
+sudo chmod +x /usr/local/bin/ktx-terminal-apply
+sudo chmod +x /usr/local/bin/ktx-panel-apply
+sudo chmod +x /usr/local/bin/ktx-folders-apply
 
 sudo chmod 0644 /etc/ktx-release
 sudo chmod 0644 /etc/issue
