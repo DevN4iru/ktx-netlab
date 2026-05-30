@@ -2,7 +2,7 @@
 # Clean enterprise rogue shell, stability-first
 
 set $mod Mod4
-set $term xfce4-terminal
+set $term /usr/local/bin/ktx-terminal
 set $browser firefox
 set $files thunar
 set $launcher rofi -show drun -show-icons
@@ -53,7 +53,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # App launchers
-bindsym $mod+x exec xfce4-terminal --title="KTX Control" --command="bash -lc 'ktx tui'"
+bindsym $mod+x exec /usr/local/bin/ktx-control-terminal
 bindsym $mod+w exec wireshark
 bindsym $mod+n exec nm-connection-editor
 bindsym $mod+f exec $files

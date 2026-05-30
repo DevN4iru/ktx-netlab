@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+exec xfce4-terminal \
+  --disable-server \
+  --hide-menubar \
+  --geometry=104x31 \
+  --title="KTX Control" \
+  --command="bash --rcfile /usr/local/share/ktx/ktx-bashrc -ic 'ktx tui; echo; exec bash --rcfile /usr/local/share/ktx/ktx-bashrc -i'"

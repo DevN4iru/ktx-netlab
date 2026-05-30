@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Reset KTX X11 keyboard mapping without disabling the laptop keyboard.
+
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+
+KB_ID="$(xinput list --id-only 'AT Translated Set 2 keyboard' 2>/dev/null || true)"
+
+if [ -n "$KB_ID" ]; then
+  xinput enable "$KB_ID" 2>/dev/null || true
+  xinput reattach "$KB_ID" 3 2>/dev/null || true
+fi
+
+setxkbmap -layout us -option
+xset r on 2>/dev/null || true
+
+echo "KTX keyboard reset done."
+xinput list-props "$KB_ID" 2>/dev/null | grep -Ei 'Device Enabled|Product' || true
+xmodmap -pm
