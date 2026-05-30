@@ -20,4 +20,10 @@ export XDG_CURRENT_DESKTOP=i3
 export XDG_SESSION_DESKTOP=ktx-i3
 export LIBGL_DRI3_DISABLE=1
 
+# Stability guard: no compositor, no Deskflow during i3 core stabilization.
+pkill -x picom 2>/dev/null || true
+pkill -x dunst 2>/dev/null || true
+pkill -x deskflow 2>/dev/null || true
+pkill -f 'deskflow-core' 2>/dev/null || true
+
 exec /usr/bin/i3 -c "$HOME/.config/i3/config" >> "$LOG" 2>&1

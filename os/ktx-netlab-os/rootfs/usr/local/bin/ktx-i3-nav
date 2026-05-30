@@ -1,29 +1,30 @@
 #!/usr/bin/env bash
 
 HELP='
-KTX i3 Navigation Help
+KTX i3 Core Navigation
 
-BASICS
+SAFE BASICS
   Super+Enter          Open terminal
   Super+D              Open app launcher
-  Super+/              Show this help
-  Super+Esc            Power / logout menu
-  Super+Shift+R        Restart i3
+  Super+F1             Show this help
+  F1                   Show this help
+  Super+P              Power menu
   Super+Shift+C        Reload i3 config
+  Super+Shift+R        Restart i3
 
 WINDOWS
-  Super+Q              Hide/minimize focused window to scratchpad
-  Super+Minus          Show hidden scratchpad window
+  Super+Q              Hide/minimize focused window
+  Super+Minus          Restore hidden window
   Super+Shift+Q        Close focused window
   Super+M              Fullscreen
-  Super+Shift+Space    Toggle floating mode
+  Super+Shift+Space    Toggle floating
   Super+Space          Switch tiled/floating focus
 
 NAVIGATION
-  Alt+Tab              Focus next window
-  Alt+Shift+Tab        Focus previous window
-  Super+Tab            Focus next window
-  Super+Shift+Tab      Focus previous window
+  Alt+Tab              Next window
+  Alt+Shift+Tab        Previous window
+  Super+Tab            Next window
+  Super+Shift+Tab      Previous window
   Super+H/J/K/L        Focus left/down/up/right
   Super+Arrow          Focus by arrow keys
 
@@ -32,16 +33,8 @@ MOVE WINDOWS
   Super+Shift+Arrow    Move window by arrow keys
 
 WORKSPACES
-  Super+1              Workspace 1:term
-  Super+2              Workspace 2:web
-  Super+3              Workspace 3:net
-  Super+4              Workspace 4:docs
-  Super+5              Workspace 5:lab
-  Super+6              Workspace 6:mon
-  Super+7              Workspace 7:ops
-  Super+8              Workspace 8:vm
-  Super+9              Workspace 9:misc
-  Super+Shift+1-9      Move focused window to workspace
+  Super+1-9            Switch workspace
+  Super+Shift+1-9      Move window to workspace
 
 LAYOUT
   Super+V              Vertical split
@@ -51,17 +44,20 @@ LAYOUT
   Super+E              Toggle split layout
   Super+R              Resize mode
 
-KTX SHORTCUTS
-  Super+X              KTX Control
+KTX APPS
+  Super+X              KTX Control terminal
   Super+W              Wireshark
-  Super+N              Network Settings
-  Super+F              File Manager
+  Super+N              Network settings
+  Super+F              File manager
   Super+B              Browser
 
-RESIZE MODE
-  Super+R              Enter resize mode
-  H/J/K/L or arrows    Resize
-  Enter/Esc            Leave resize mode
+DEAD KEY POLICY
+  No keybinds use = or +.
+
+DISABLED FOR STABILITY
+  Picom compositor disabled.
+  Deskflow autostart disabled.
+  True terminal transparency disabled until Xorg proves stable.
 
 ROUTER MODE
   LOCKED. No NAT, DHCP, firewall routing, or packet forwarding is enabled.
