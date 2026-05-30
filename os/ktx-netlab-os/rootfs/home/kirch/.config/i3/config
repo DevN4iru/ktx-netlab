@@ -42,14 +42,23 @@ exec --no-startup-id sh -c 'pgrep -x dunst || dunst'
 exec --no-startup-id sh -c 'pgrep -x picom || picom --config "$HOME/.config/picom/picom.conf" -b'
 exec --no-startup-id sh -c 'pgrep -f polkit-gnome-authentication-agent-1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
 exec --no-startup-id /usr/local/bin/ktx-i3-splash
+exec --no-startup-id /usr/local/bin/ktx-deskflow-autostart
 
 # Core navigation
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $launcher
-bindsym $mod+q kill
+
+# KTX friendly navigation
+bindsym $mod+q move scratchpad
+bindsym $mod+Shift+q kill
+bindsym $mod+slash exec /usr/local/bin/ktx-i3-nav
+bindsym $mod+Escape exec /usr/local/bin/ktx-i3-power
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exit
 
 # KTX convenience launchers
 bindsym $mod+x exec ktx-control

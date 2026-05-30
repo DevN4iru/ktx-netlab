@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+choice="$(printf '%s\n' \
+  'Lock screen' \
+  'Reload i3 config' \
+  'Restart i3' \
+  'Logout i3' \
+  'Cancel' | rofi -dmenu -i -p 'KTX Power')"
+
+case "$choice" in
+  "Lock screen") i3lock -c 0b0f14 ;;
+  "Reload i3 config") i3-msg reload ;;
+  "Restart i3") i3-msg restart ;;
+  "Logout i3") i3-msg exit ;;
+  *) exit 0 ;;
+esac

@@ -70,7 +70,11 @@ for f in \
   /usr/local/bin/ktx-i3-session \
   /usr/local/bin/ktx-i3-splash \
   /usr/local/bin/ktx-i3-info \
-  /usr/local/bin/ktx-i3-apply
+  /usr/local/bin/ktx-i3-apply \
+  /usr/local/bin/ktx-i3-nav \
+  /usr/local/bin/ktx-i3-power \
+  /usr/local/bin/ktx-deskflow \
+  /usr/local/bin/ktx-deskflow-autostart
 do
   if [ -e "$f" ]; then
     sudo chmod +x "$f"

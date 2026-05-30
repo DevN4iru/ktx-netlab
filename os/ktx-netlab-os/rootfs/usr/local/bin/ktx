@@ -164,6 +164,8 @@ Usage:
   ktx apps apply      Apply default applications and bookmarks
   ktx i3 info         Show KTX i3 shell info
   ktx i3 apply        Apply KTX i3 shell config
+  ktx i3 nav          Show KTX i3 navigation help
+  ktx deskflow        Show Deskflow status
   ktx about           Show KTX NetLab OS about screen
   ktx fetch           Show KTX fastfetch identity
   ktx version         Show KTX NetLab OS version
@@ -246,10 +248,12 @@ case "${1:-help}" in
     case "${1:-info}" in
       info) /usr/local/bin/ktx-i3-info ;;
       apply) /usr/local/bin/ktx-i3-apply ;;
-      *) echo "Usage: ktx i3 {info|apply}"; exit 1 ;;
+      nav|help) /usr/local/bin/ktx-i3-nav ;;
+      *) echo "Usage: ktx i3 {info|apply|nav|help}"; exit 1 ;;
     esac
     ;;
 
+  deskflow) /usr/local/bin/ktx-deskflow "${2:-status}" ;;
   about) /usr/local/bin/ktx-about ;;
   fetch) /usr/local/bin/ktx-fetch ;;
   version) /usr/local/bin/ktx-version ;;

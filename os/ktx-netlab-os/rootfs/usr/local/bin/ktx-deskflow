@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CONF="/etc/ktx-deskflow.conf"
+LOG="$HOME/.ktx-deskflow.log"
+
+[ -f "$CONF" ] && source "$CONF"
+
+KTX_DESKFLOW_ENABLE="${KTX_DESKFLOW_ENABLE:-0}"
+KTX_DESKFLOW_ROLE="${KTX_DESKFLOW_ROLE:-client}"
+KTX_DESKFLOW_SERVER="${KTX_DESKFLOW_SERVER:-192.168.254.159}"
+KTX_DESKFLOW_NAME="${KTX_DESKFLOW_NAME:-$(hostname 2>/dev/null || echo ktx-netlab)}"
+
+core_cmd() {
+  command -v deskflow-core 2>/dev/null || true
+}
+
+status() {
+  echo "===== KTX DESKFLOW ====="
+  echo "Enabled : $KTX_DESKFLOW_ENABLE"
+  echo "Role    : $KTX_DESKFLOW_ROLE"
+  echo "Server  : $KTX_DESKFLOW_SERVER"
+  echo "Name    : $KTX_DESKFLOW_NAME"
+  echo
+  echo "Command : $(core_cmd || true)"
+  echo
+  pgrep -a -f 'deskflow-core|deskflow' || echo "Deskflow is not running."
+}
+
+start_client() {
+  if [ "$KTX_DESKFLOW_ENABLE" != "1" ]; then
+    echo "Deskflow autostart disabled in $CONF"
+    exit 0
+  fi
+
+  CORE="$(core_cmd)"
+  if [ -z "$CORE" ]; then
+    echo "deskflow-core not found. Install package: sudo pacman -S deskflow"
+    exit 1
+  fi
+
+  if pgrep -f "deskflow-core client $KTX_DESKFLOW_SERVER" >/dev/null 2>&1; then
+    echo "Deskflow client already running."
+    exit 0
+  fi
+
+  echo "Starting Deskflow client -> $KTX_DESKFLOW_SERVER"
+  {
+    echo
+    echo "===== DESKFLOW START ====="
+    date
+    echo "Command: $CORE client $KTX_DESKFLOW_SERVER --name $KTX_DESKFLOW_NAME"
+    "$CORE" client "$KTX_DESKFLOW_SERVER" --name "$KTX_DESKFLOW_NAME"
+  } >> "$LOG" 2>&1 &
+}
+
+stop_all() {
+  pkill -f 'deskflow-core client' 2>/dev/null || true
+  pkill -f 'deskflow client' 2>/dev/null || true
+  echo "Deskflow client stopped."
+}
+
+case "${1:-status}" in
+  status) status ;;
+  start) start_client ;;
+  stop) stop_all ;;
+  restart) stop_all; sleep 1; start_client ;;
+  logs) tail -120 "$LOG" 2>/dev/null || echo "No log yet: $LOG" ;;
+  config) cat "$CONF" ;;
+  *)
+    echo "Usage: ktx-deskflow {status|start|stop|restart|logs|config}"
+    exit 1
+    ;;
+esac
