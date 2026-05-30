@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KTX System Info
+Comment=Show KTX NetLab OS system information
+Exec=xfce4-terminal --title="KTX System Info" --hold --command="ktx-fetch"
+Icon=utilities-system-monitor
+Terminal=false
+Categories=System;

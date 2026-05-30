@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mkdir -p "$HOME/.config"
+mkdir -p "$HOME/.config/gtk-3.0"
+mkdir -p "$HOME/.local/share/applications"
+
+cat > "$HOME/.config/mimeapps.list" <<'MIME'
+[Default Applications]
+text/plain=org.xfce.mousepad.desktop
+text/x-shellscript=org.xfce.mousepad.desktop
+application/x-shellscript=org.xfce.mousepad.desktop
+inode/directory=thunar.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+text/html=firefox.desktop
+application/pdf=firefox.desktop
+image/png=ristretto.desktop
+image/jpeg=ristretto.desktop
+MIME
+
+cat > "$HOME/.config/gtk-3.0/bookmarks" <<EOF2
+file://$HOME/NetLab NetLab
+file://$HOME/NetLab/Audits Audits
+file://$HOME/NetLab/Reports Reports
+file://$HOME/NetLab/Captures Captures
+file://$HOME/NetLab/Router-Lab Router-Lab
+file://$HOME/NetLab/Cisco-Labs Cisco-Labs
+file://$HOME/Projects/ktx-netlab Repository
+file:///var/log/ktx-netlab KTX-System-Logs
+EOF2
+
+xdg-settings set default-web-browser firefox.desktop 2>/dev/null || true
+
+echo "KTX app defaults applied."
+echo
+echo "Default browser : Firefox"
+echo "Default editor  : Mousepad"
+echo "File manager    : Thunar"
+echo "Terminal        : xfce4-terminal"
+echo "Bookmarks       : ~/NetLab workspace"

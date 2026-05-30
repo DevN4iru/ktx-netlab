@@ -161,7 +161,10 @@ Usage:
   ktx shell apply     Apply KTX shell identity
   ktx terminal apply  Apply KTX terminal profile
   ktx folders apply   Create KTX NetLab OS folders
-  ktx polish          Apply shell, terminal, folders, desktop, panel
+  ktx apps apply      Apply default applications and bookmarks
+  ktx about           Show KTX NetLab OS about screen
+  ktx fetch           Show KTX fastfetch identity
+  ktx polish          Apply shell, terminal, folders, desktop, panel, apps
   ktx audit           Run full KTX NetLab audit
   ktx repo            Show Git repo status and latest commits
   ktx logs            Show KTX logs
@@ -223,7 +226,18 @@ case "${1:-help}" in
     /usr/local/bin/ktx-folders-apply
     /usr/local/bin/ktx-desktop-apply --force
     /usr/local/bin/ktx-panel-apply
+    /usr/local/bin/ktx-apps-apply
     ;;
+  apps)
+    shift || true
+    case "${1:-info}" in
+      apply) /usr/local/bin/ktx-apps-apply ;;
+      info) echo "KTX apps: Firefox, Mousepad, Thunar, XFCE Terminal, NetLab bookmarks" ;;
+      *) echo "Usage: ktx apps {info|apply}"; exit 1 ;;
+    esac
+    ;;
+  about) /usr/local/bin/ktx-about ;;
+  fetch) /usr/local/bin/ktx-fetch ;;
 
   audit) cmd_audit ;;
   repo) cmd_repo ;;

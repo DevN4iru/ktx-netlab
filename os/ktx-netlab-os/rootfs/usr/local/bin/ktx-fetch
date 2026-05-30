@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+CONFIG="$HOME/.config/fastfetch/config.jsonc"
+
+if command -v fastfetch >/dev/null 2>&1; then
+  if [ -f "$CONFIG" ]; then
+    fastfetch --config "$CONFIG"
+  else
+    fastfetch
+  fi
+else
+  ktx status
+fi

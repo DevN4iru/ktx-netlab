@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=About KTX NetLab OS
+Comment=Show KTX NetLab OS identity and system purpose
+Exec=xfce4-terminal --title="About KTX NetLab OS" --hold --command="ktx-about"
+Icon=computer
+Terminal=false
+Categories=System;

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+clear
+cat <<'BANNER'
+KTX NetLab OS
+Arch-based network lab operating environment
+BANNER
+
+echo
+cat /etc/ktx-release 2>/dev/null || true
+echo
+echo "Desktop Stack:"
+echo "  Display Manager : LightDM"
+echo "  Desktop Env     : XFCE"
+echo "  Window Manager  : xfwm4"
+echo "  File Manager    : Thunar"
+echo "  Terminal        : xfce4-terminal"
+echo
+echo "Core Purpose:"
+echo "  Portfolio proof"
+echo "  Network lab"
+echo "  IT support toolkit"
+echo "  Router lab foundation"
+echo "  Cybersecurity lab foundation"
+echo
+echo "Main Commands:"
+echo "  ktx status"
+echo "  ktx net"
+echo "  ktx mode status"
+echo "  ktx desktop info"
+echo "  ktx polish"
+echo "  ktx audit"
+echo
+echo "Workspace:"
+echo "  ~/NetLab"
+echo
+read -rp "Press Enter to close..."

@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+HOST="$(cat /etc/hostname 2>/dev/null || hostnamectl --static 2>/dev/null || echo ktx-netlab)"
+MODE="$(cat /etc/ktx-mode 2>/dev/null || echo lab)"
+
 cat <<'BANNER'
 KTX NetLab OS v0.1
 Welcome back, Kirch.
@@ -6,10 +10,12 @@ Setting up the KTX NetLab. Please wait a moment.
 BANNER
 
 echo
-echo "Host:   $(hostname)"
+echo "Host:   $HOST"
 echo "Kernel: $(uname -r)"
-echo "Mode:   $(cat /etc/ktx-mode 2>/dev/null || echo lab)"
+echo "Mode:   $MODE"
 echo
-ip -br addr | sed 's/^/  /'
+
+ip -br addr 2>/dev/null | sed 's/^/  /' || true
+
 echo
 echo "Run: ktx help"

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=KTX Mode Manager
+Comment=Open KTX NetLab OS mode manager
+Exec=xfce4-terminal --title="KTX Mode Manager" --hold --command="ktx-mode menu"
+Icon=network-server
+Terminal=false
+Categories=System;Network;
