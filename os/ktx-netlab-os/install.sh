@@ -77,6 +77,19 @@ do
   fi
 done
 
+
+# KTX session ownership
+if [ -d /usr/share/xsessions ]; then
+  sudo chown root:root /usr/share/xsessions/*.desktop 2>/dev/null || true
+  sudo chmod 644 /usr/share/xsessions/*.desktop 2>/dev/null || true
+fi
+
+if [ -d /etc/lightdm/lightdm.conf.d ]; then
+  sudo chown -R root:root /etc/lightdm/lightdm.conf.d
+  sudo chmod 755 /etc/lightdm/lightdm.conf.d
+  sudo chmod 644 /etc/lightdm/lightdm.conf.d/*.conf 2>/dev/null || true
+fi
+
 echo "===== SYSTEMD ====="
 sudo systemctl daemon-reload
 sudo systemctl enable --now ktx-netlab-bootcheck.service || true
