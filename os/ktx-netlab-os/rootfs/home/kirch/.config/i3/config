@@ -8,15 +8,15 @@ set $files thunar
 set $launcher rofi -show drun -show-icons
 set $wall /usr/share/backgrounds/ktx-netlab/ktx-wallpaper-mountain.jpg
 
-font pango:Noto Sans 10
+font pango:JetBrainsMono Nerd Font 10
 floating_modifier $mod
 
-set $bg        #0b0f14
-set $panel     #111418
-set $text      #e5e7eb
-set $muted     #64748b
-set $accent    #38bdf8
-set $rogue     #9f1239
+set $bg        #07111C
+set $panel     #0B1726
+set $text      #EAF6FF
+set $muted     #7C8EA3
+set $accent    #7DD3FC
+set $rogue     #38BDF8
 set $urgent    #ef4444
 
 client.focused          $accent $accent $bg   $rogue $accent
@@ -27,8 +27,8 @@ client.urgent           $urgent $urgent $text $urgent $urgent
 default_border pixel 2
 default_floating_border pixel 2
 hide_edge_borders smart
-gaps inner 6
-gaps outer 2
+gaps inner 8
+gaps outer 4
 smart_gaps on
 
 # Stability-first startup. No compositor. No Deskflow. No notification daemon.
@@ -146,7 +146,7 @@ bar {
     status_command i3status -c ~/.config/i3status/config
     position top
     tray_output primary
-    font pango:Noto Sans 10
+    font pango:JetBrainsMono Nerd Font 10
 
     colors {
         background $bg

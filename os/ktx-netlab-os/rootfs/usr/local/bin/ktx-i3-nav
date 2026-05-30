@@ -54,9 +54,12 @@ KTX APPS
 DEAD KEY POLICY
   No keybinds use = or +.
 
-DISABLED FOR STABILITY
+STABILITY POLICY
   Picom compositor disabled.
   Deskflow autostart disabled.
+  Deskflow manual launch allowed.
+  Use: ktx deskflow start
+  Use: ktx deskflow stop
   True terminal transparency disabled until Xorg proves stable.
 
 ROUTER MODE

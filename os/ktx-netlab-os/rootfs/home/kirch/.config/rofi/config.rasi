@@ -1,31 +1,33 @@
 configuration {
     modi: "drun,run,window";
     show-icons: true;
-    font: "Noto Sans 10";
+    font: "JetBrainsMono Nerd Font 10";
     display-drun: "Apps";
     display-run: "Run";
     display-window: "Windows";
 }
 
 * {
-    bg: #0b0f14;
-    panel: #111418;
-    text: #e5e7eb;
-    muted: #64748b;
-    accent: #9f1239;
-    cyan: #38bdf8;
+    bg: #07111C;
+    panel: #0B1726;
+    text: #EAF6FF;
+    muted: #7C8EA3;
+    accent: #7DD3FC;
+    accent2: #38BDF8;
+    border: #1E3A5F;
 }
 
 window {
-    width: 42%;
+    width: 44%;
     border: 2px;
     border-color: @accent;
     background-color: @bg;
+    border-radius: 8px;
 }
 
 mainbox {
     background-color: @bg;
-    padding: 12px;
+    padding: 14px;
 }
 
 inputbar {
@@ -33,11 +35,12 @@ inputbar {
     text-color: @text;
     padding: 10px;
     border: 1px;
-    border-color: @muted;
+    border-color: @border;
+    border-radius: 6px;
 }
 
 prompt {
-    text-color: @cyan;
+    text-color: @accent;
 }
 
 entry {
@@ -46,20 +49,22 @@ entry {
 
 listview {
     background-color: @bg;
-    lines: 10;
+    lines: 9;
     columns: 1;
     fixed-height: false;
+    spacing: 4px;
 }
 
 element {
     padding: 8px;
     background-color: @bg;
     text-color: @text;
+    border-radius: 5px;
 }
 
 element selected {
     background-color: @accent;
-    text-color: @text;
+    text-color: #07111C;
 }
 
 element-icon {
