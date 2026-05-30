@@ -1,23 +1,45 @@
-# KTX Terminal Bash Theme
+# KTX Terminal Bash Theme v0.2
 export TERM=xterm-256color
 export COLORTERM=truecolor
 
-# Force VTE colors on shell start
-printf '\033]10;#EAF6FF\007'   # foreground
-printf '\033]11;#031B2E\007'   # background
-printf '\033]12;#7DD3FC\007'   # cursor
+# VTE colors
+printf '\033]10;#EAF6FF\007'
+printf '\033]11;#031B2E\007'
+printf '\033]12;#7DD3FC\007'
 
 alias ls='ls --color=auto --group-directories-first'
 alias ll='ls -lah --color=auto --group-directories-first'
+alias la='ls -A --color=auto --group-directories-first'
 alias grep='grep --color=auto'
 alias ip='ip -color=auto'
+alias cls='clear'
+alias ktx-reset-keyboard='DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority ktx-keyboard-reset'
+alias ktx-transparency-on='DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority ktx-compositor-start'
+alias ktx-transparency-off='DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority ktx-compositor-stop'
 
-clear
-printf '\033[38;2;125;211;252m'
-printf '╔══════════════════════════════════════╗\n'
-printf '║ KTX NetLab Terminal                  ║\n'
-printf '║ i3 Core · Intel UXA · Stability Mode ║\n'
-printf '╚══════════════════════════════════════╝\n'
-printf '\033[0m\n'
+ktx_git_branch() {
+  git branch --show-current 2>/dev/null | sed 's/.*/  &/'
+}
 
-PS1='\[\033[38;2;125;211;252m\]KTX \[\033[97m\]\u@\h \[\033[38;2;56;189;248m\]\w\[\033[0m\]\n\[\033[38;2;125;211;252m\]❯ \[\033[0m\]'
+ktx_ip() {
+  ip -4 addr show enp19s0 2>/dev/null | awk '/inet / {print $2}' | cut -d/ -f1 | head -n1
+}
+
+ktx_banner() {
+  clear
+  printf '\033[38;2;125;211;252m'
+  printf '╔════════════════════════════════════════════╗\n'
+  printf '║  KTX NetLab Terminal                       ║\n'
+  printf '║  i3 Core · Picom XRender · Intel UXA       ║\n'
+  printf '║  Portable-safe · No keyboard kill          ║\n'
+  printf '╚════════════════════════════════════════════╝\n'
+  printf '\033[0m'
+  printf '\033[38;2;124;142;163m'
+  printf '  LAN: %s\n' "$(ktx_ip)"
+  printf '  Tip: ktx tui · ktx status · F1 for i3 help\n\n'
+  printf '\033[0m'
+}
+
+ktx_banner
+
+PS1='\[\033[38;2;125;211;252m\]╭─ KTX \[\033[97m\]\u@\h \[\033[38;2;56;189;248m\]\w\[\033[38;2;124;142;163m\]$(ktx_git_branch)\[\033[0m\]\n\[\033[38;2;125;211;252m\]╰─❯ \[\033[0m\]'

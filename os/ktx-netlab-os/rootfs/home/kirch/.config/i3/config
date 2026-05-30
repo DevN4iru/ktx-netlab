@@ -11,7 +11,7 @@ set $wall /usr/share/backgrounds/ktx-netlab/ktx-wallpaper-mountain.jpg
 font pango:JetBrainsMono Nerd Font 10
 floating_modifier $mod
 
-set $bg        #07111C
+set $bg        #06111F
 set $panel     #0B1726
 set $text      #EAF6FF
 set $muted     #7C8EA3
@@ -27,8 +27,8 @@ client.urgent           $urgent $urgent $text $urgent $urgent
 default_border pixel 2
 default_floating_border pixel 2
 hide_edge_borders smart
-gaps inner 8
-gaps outer 4
+gaps inner 10
+gaps outer 5
 smart_gaps on
 
 # Stability-first startup. No compositor. No Deskflow. No notification daemon.

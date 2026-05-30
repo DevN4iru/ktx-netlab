@@ -15,29 +15,29 @@ order += "battery 0"
 order += "tztime local"
 
 ethernet enp19s0 {
-    format_up = "NET %ip"
-    format_down = "NET down"
+    format_up = "󰈀 %ip"
+    format_down = "󰈂 offline"
 }
 
 disk "/" {
-    format = "SSD %avail"
+    format = "󰋊 %avail"
 }
 
 memory {
-    format = "RAM %used"
+    format = "󰍛 %used"
     threshold_degraded = "6G"
-    format_degraded = "RAM %used"
+    format_degraded = "󰍛 %used"
 }
 
 load {
-    format = "CPU %1min"
+    format = "󰻠 %1min"
 }
 
 battery 0 {
-    format = "BAT %percentage %status"
+    format = "󰁹 %percentage %status"
     low_threshold = 20
 }
 
 tztime local {
-    format = "%a %d %b  %H:%M"
+    format = "󰥔 %a %d %b  %H:%M"
 }

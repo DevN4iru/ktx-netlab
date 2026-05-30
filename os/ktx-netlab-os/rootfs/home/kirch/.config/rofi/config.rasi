@@ -2,14 +2,16 @@ configuration {
     modi: "drun,run,window";
     show-icons: true;
     font: "JetBrainsMono Nerd Font 10";
-    display-drun: "Apps";
-    display-run: "Run";
-    display-window: "Windows";
+    display-drun: "󰀻 Apps";
+    display-run: "󰌧 Run";
+    display-window: "󰖯 Windows";
+    drun-display-format: "{icon}  {name}";
 }
 
 * {
     bg: #07111C;
     panel: #0B1726;
+    panel2: #0E2238;
     text: #EAF6FF;
     muted: #7C8EA3;
     accent: #7DD3FC;
@@ -18,25 +20,27 @@ configuration {
 }
 
 window {
-    width: 44%;
+    width: 46%;
     border: 2px;
     border-color: @accent;
     background-color: @bg;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 mainbox {
     background-color: @bg;
-    padding: 14px;
+    padding: 16px;
+    spacing: 10px;
 }
 
 inputbar {
     background-color: @panel;
     text-color: @text;
-    padding: 10px;
+    padding: 12px;
     border: 1px;
     border-color: @border;
-    border-radius: 6px;
+    border-radius: 8px;
+    spacing: 8px;
 }
 
 prompt {
@@ -45,6 +49,8 @@ prompt {
 
 entry {
     text-color: @text;
+    placeholder: "Search KTX...";
+    placeholder-color: @muted;
 }
 
 listview {
@@ -52,14 +58,14 @@ listview {
     lines: 9;
     columns: 1;
     fixed-height: false;
-    spacing: 4px;
+    spacing: 5px;
 }
 
 element {
-    padding: 8px;
+    padding: 9px;
     background-color: @bg;
     text-color: @text;
-    border-radius: 5px;
+    border-radius: 7px;
 }
 
 element selected {
@@ -68,7 +74,7 @@ element selected {
 }
 
 element-icon {
-    size: 22px;
+    size: 24px;
 }
 
 element-text {
