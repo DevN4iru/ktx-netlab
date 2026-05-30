@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+
+pkill -x polybar 2>/dev/null || true
+
+while pgrep -x polybar >/dev/null; do
+  sleep 0.2
+done
+
+polybar -q -c "$HOME/.config/polybar/config.ini" ktx \
+  >/tmp/ktx-polybar.log 2>&1 &

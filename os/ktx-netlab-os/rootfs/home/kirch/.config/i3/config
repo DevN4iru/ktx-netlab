@@ -33,6 +33,7 @@ smart_gaps on
 
 # Stability-first startup. No compositor. No Deskflow. No notification daemon.
 exec_always --no-startup-id feh --bg-fill $wall
+exec_always --no-startup-id /usr/local/bin/ktx-polybar-launch
 exec --no-startup-id sh -c 'pgrep -x nm-applet || nm-applet'
 exec --no-startup-id sh -c 'pgrep -f polkit-gnome-authentication-agent-1 || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1'
 
@@ -142,19 +143,3 @@ for_window [class="Nm-connection-editor"] floating enable
 for_window [title="KTX Control"] floating enable, resize set 900 600, move position center
 for_window [title="KTX i3 Help"] floating enable, resize set 900 650, move position center
 
-bar {
-    status_command i3status -c ~/.config/i3status/config
-    position top
-    tray_output primary
-    font pango:JetBrainsMono Nerd Font 10
-
-    colors {
-        background $bg
-        statusline $text
-        separator  $muted
-        focused_workspace  $accent $accent $bg
-        active_workspace   $panel  $panel  $text
-        inactive_workspace $bg     $bg     $muted
-        urgent_workspace   $urgent $urgent $text
-    }
-}
