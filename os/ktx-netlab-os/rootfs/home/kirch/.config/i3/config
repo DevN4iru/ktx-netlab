@@ -19,16 +19,16 @@ set $accent    #7DD3FC
 set $rogue     #38BDF8
 set $urgent    #ef4444
 
-client.focused          $accent $accent $bg   $rogue $accent
-client.focused_inactive $panel  $panel  $text $muted $panel
-client.unfocused        $panel  $panel  $muted $muted $panel
-client.urgent           $urgent $urgent $text $urgent $urgent
+client.focused          #FFFFFF #FFFFFF #0B1220 #FFFFFF #FFFFFF
+client.focused_inactive #334155 #334155 #CBD5E1 #64748B #334155
+client.unfocused        #1E293B #1E293B #94A3B8 #334155 #1E293B
+client.urgent           #F87171 #F87171 #0B1220 #F87171 #F87171
 
-default_border pixel 2
-default_floating_border pixel 2
-hide_edge_borders smart
-gaps inner 10
-gaps outer 5
+default_border pixel 3
+default_floating_border pixel 3
+hide_edge_borders none
+gaps inner 12
+gaps outer 6
 smart_gaps on
 
 # Stability-first startup. No compositor. No Deskflow. No notification daemon.
