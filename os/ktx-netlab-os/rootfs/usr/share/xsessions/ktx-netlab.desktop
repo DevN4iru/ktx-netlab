@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=KTX NetLab OS
+Comment=KTX NetLab OS clean XFCE appliance session
+Exec=/usr/local/bin/ktx-session
+TryExec=/usr/local/bin/ktx-session
+Type=Application
+DesktopNames=XFCE

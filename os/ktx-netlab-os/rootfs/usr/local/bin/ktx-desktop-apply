@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+set -u
+
+FORCE="${1:-}"
+MARKER="$HOME/.config/ktx-netlab-desktop-applied"
+WALL="/usr/share/backgrounds/ktx-netlab/ktx-netlab-os.svg"
+
+log() {
+  echo "[ktx-desktop] $*"
+}
+
+if [ -f "$MARKER" ] && [ "$FORCE" != "--force" ]; then
+  exit 0
+fi
+
+mkdir -p "$HOME/.config"
+mkdir -p "$HOME/.config/autostart"
+mkdir -p "$HOME/.config/xfce4"
+mkdir -p "$HOME/Desktop"
+
+log "applying KTX NetLab OS desktop profile"
+
+# Desktop launcher permissions
+find "$HOME/Desktop" -name "*.desktop" -exec chmod +x {} \; 2>/dev/null || true
+
+# Set GTK / icon / font identity
+if command -v xfconf-query >/dev/null 2>&1; then
+  xfconf-query -c xsettings -p /Net/ThemeName -n -t string -s "Adwaita-dark" 2>/dev/null || true
+  xfconf-query -c xsettings -p /Net/IconThemeName -n -t string -s "Papirus-Dark" 2>/dev/null || true
+  xfconf-query -c xsettings -p /Gtk/FontName -n -t string -s "Noto Sans 10" 2>/dev/null || true
+  xfconf-query -c xsettings -p /Gtk/MonospaceFontName -n -t string -s "DejaVu Sans Mono 10" 2>/dev/null || true
+
+  # xfwm4 = XFCE window manager
+  xfconf-query -c xfwm4 -p /general/theme -n -t string -s "Default" 2>/dev/null || true
+  xfconf-query -c xfwm4 -p /general/title_font -n -t string -s "Noto Sans Bold 10" 2>/dev/null || true
+  xfconf-query -c xfwm4 -p /general/button_layout -n -t string -s "O|HMC" 2>/dev/null || true
+  xfconf-query -c xfwm4 -p /general/raise_on_click -n -t bool -s true 2>/dev/null || true
+
+  # Desktop behavior
+  xfconf-query -c xfce4-desktop -p /desktop-icons/style -n -t int -s 2 2>/dev/null || true
+  xfconf-query -c xfce4-desktop -p /desktop-icons/show-home -n -t bool -s false 2>/dev/null || true
+  xfconf-query -c xfce4-desktop -p /desktop-icons/show-filesystem -n -t bool -s false 2>/dev/null || true
+  xfconf-query -c xfce4-desktop -p /desktop-icons/show-trash -n -t bool -s false 2>/dev/null || true
+  xfconf-query -c xfce4-desktop -p /desktop-icons/show-removable -n -t bool -s true 2>/dev/null || true
+
+  # Wallpaper: apply to existing monitor/workspace paths
+  xfconf-query -c xfce4-desktop -l 2>/dev/null | grep '/last-image$' | while read -r prop; do
+    xfconf-query -c xfce4-desktop -p "$prop" -s "$WALL" 2>/dev/null || true
+  done
+
+  # Power behavior: laptop should not sleep while acting as lab node
+  xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/blank-on-ac -n -t int -s 0 2>/dev/null || true
+  xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/dpms-enabled -n -t bool -s false 2>/dev/null || true
+  xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/lid-action-on-ac -n -t int -s 0 2>/dev/null || true
+fi
+
+# Minimal user autostart helpers
+cat > "$HOME/.config/autostart/ktx-polkit.desktop" <<'DESKTOP'
+[Desktop Entry]
+Type=Application
+Name=KTX Policy Agent
+Comment=Start graphical privilege prompt
+Exec=/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+OnlyShowIn=XFCE;
+X-GNOME-Autostart-enabled=true
+DESKTOP
+
+cat > "$HOME/.config/autostart/ktx-network-applet.desktop" <<'DESKTOP'
+[Desktop Entry]
+Type=Application
+Name=KTX Network Applet
+Comment=Start NetworkManager tray applet
+Exec=nm-applet
+OnlyShowIn=XFCE;
+X-GNOME-Autostart-enabled=true
+DESKTOP
+
+cat > "$HOME/.config/autostart/ktx-session-welcome.desktop" <<'DESKTOP'
+[Desktop Entry]
+Type=Application
+Name=KTX Session Welcome
+Comment=Show KTX session readiness notification
+Exec=sh -c 'sleep 3; notify-send "KTX NetLab OS" "Welcome back, Kirch. KTX NetLab is ready."'
+OnlyShowIn=XFCE;
+X-GNOME-Autostart-enabled=true
+DESKTOP
+
+touch "$MARKER"
+log "desktop profile applied"

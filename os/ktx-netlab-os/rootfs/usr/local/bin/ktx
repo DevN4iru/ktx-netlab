@@ -155,6 +155,8 @@ Usage:
   ktx mode sensor     Set sensor mode
   ktx mode router     Show router-mode dry run
   ktx mode recovery   Show recovery-mode dry run
+  ktx desktop         Show DE/WM desktop stack
+  ktx desktop apply   Apply DE/WM desktop profile
   ktx audit           Run full KTX NetLab audit
   ktx repo            Show Git repo status and latest commits
   ktx logs            Show KTX logs
@@ -169,6 +171,14 @@ case "${1:-help}" in
   net) cmd_net ;;
   services) cmd_services ;;
   mode) shift; /usr/local/bin/ktx-mode "${@:-status}" ;;
+  desktop)
+    shift || true
+    case "${1:-info}" in
+      info) /usr/local/bin/ktx-desktop-info ;;
+      apply) /usr/local/bin/ktx-desktop-apply --force ;;
+      *) echo "Usage: ktx desktop {info|apply}"; exit 1 ;;
+    esac
+    ;;
   audit) cmd_audit ;;
   repo) cmd_repo ;;
   logs) cmd_logs ;;

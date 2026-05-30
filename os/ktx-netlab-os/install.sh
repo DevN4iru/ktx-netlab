@@ -40,6 +40,9 @@ sudo chmod +x /usr/local/bin/ktx-mode
 sudo chmod +x /usr/local/bin/ktx-welcome
 sudo chmod +x /usr/local/bin/ktx-control
 sudo chmod +x /usr/local/bin/ktx-packettracer-placeholder
+sudo chmod +x /usr/local/bin/ktx-session
+sudo chmod +x /usr/local/bin/ktx-desktop-apply
+sudo chmod +x /usr/local/bin/ktx-desktop-info
 
 sudo chmod 0644 /etc/ktx-release
 sudo chmod 0644 /etc/issue
@@ -47,7 +50,9 @@ sudo chmod 0644 /etc/profile.d/ktx-netlab.sh
 sudo chmod 0644 /etc/systemd/system/ktx-netlab-bootcheck.service
 
 sudo mkdir -p /home/kirch/Desktop
+sudo mkdir -p /home/kirch/.config
 sudo chown -R kirch:kirch /home/kirch/Desktop
+sudo chown -R kirch:kirch /home/kirch/.config
 find /home/kirch/Desktop -name "*.desktop" -exec chmod +x {} \; 2>/dev/null || true
 
 echo "===== SYSTEMD ====="

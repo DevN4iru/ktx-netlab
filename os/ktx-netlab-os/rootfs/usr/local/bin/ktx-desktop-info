@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+echo "===== KTX NETLAB OS DESKTOP STACK ====="
+echo "Display Manager: LightDM"
+echo "Desktop Environment: XFCE"
+echo "Window Manager: xfwm4"
+echo "File Manager: Thunar"
+echo "Terminal: xfce4-terminal"
+echo "Menu: Whisker Menu / XFCE Application Menu"
+echo "Theme: Adwaita-dark"
+echo "Icons: Papirus-Dark"
+echo
+echo "===== SESSION FILES ====="
+ls -lah /usr/share/xsessions/ktx-netlab.desktop 2>/dev/null || true
+echo
+echo "===== RUNNING SESSION ====="
+echo "XDG_CURRENT_DESKTOP=${XDG_CURRENT_DESKTOP:-unknown}"
+echo "XDG_SESSION_DESKTOP=${XDG_SESSION_DESKTOP:-unknown}"
+echo "DESKTOP_SESSION=${DESKTOP_SESSION:-unknown}"
+echo
+echo "===== RUNNING PROCESSES ====="
+pgrep -a lightdm || true
+pgrep -a xfce4-session || true
+pgrep -a xfwm4 || true
+pgrep -a xfce4-panel || true
+pgrep -a Thunar || true

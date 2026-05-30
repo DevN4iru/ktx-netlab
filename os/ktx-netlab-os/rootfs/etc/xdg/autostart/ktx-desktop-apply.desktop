@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=KTX Desktop Profile
+Comment=Apply KTX NetLab OS XFCE desktop profile
+Exec=/usr/local/bin/ktx-desktop-apply
+OnlyShowIn=XFCE;
+X-GNOME-Autostart-enabled=true
