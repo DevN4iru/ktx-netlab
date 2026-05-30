@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+pkill -x xcompmgr 2>/dev/null || true
+pkill -x picom 2>/dev/null || true
+echo "KTX compositor stopped."

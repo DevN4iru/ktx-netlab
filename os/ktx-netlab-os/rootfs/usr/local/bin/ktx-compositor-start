@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# KTX safe compositor for terminal transparency.
+# Uses picom XRender backend only. No GLX. No xcompmgr.
+
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+
+pkill -x xcompmgr 2>/dev/null || true
+
+if pgrep -x picom >/dev/null; then
+  echo "KTX compositor already active: picom"
+  exit 0
+fi
+
+nohup picom \
+  --config "$HOME/.config/picom/ktx-xrender-safe.conf" \
+  --backend xrender \
+  --no-fading-openclose \
+  --log-file /tmp/ktx-picom-xrender.log \
+  >/tmp/ktx-picom-start.log 2>&1 &
+
+sleep 1
+
+if pgrep -x picom >/dev/null; then
+  echo "KTX compositor active: picom xrender"
+else
+  echo "KTX compositor failed."
+  tail -80 /tmp/ktx-picom-xrender.log 2>/dev/null || true
+  tail -80 /tmp/ktx-picom-start.log 2>/dev/null || true
+  exit 1
+fi

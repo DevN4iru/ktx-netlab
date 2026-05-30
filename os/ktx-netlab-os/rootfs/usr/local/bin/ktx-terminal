@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+
+ktx-compositor-start >/dev/null 2>&1 || true
+
+TITLE="KTX Terminal $$"
+
 exec xfce4-terminal \
   --disable-server \
   --hide-menubar \
   --geometry=104x31 \
-  --title="KTX Terminal" \
+  --title="$TITLE" \
   --command="bash --rcfile /usr/local/share/ktx/ktx-bashrc -i"
