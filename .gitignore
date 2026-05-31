@@ -9,3 +9,12 @@ node_modules/
 vendor/
 __pycache__/
 .DS_Store
+
+# Realme C11 / ADB local secrets and runtime state
+.android/
+adbkey
+adbkey.pub
+realme-adbkey-export.zip
+realme-adbkey-import/
+KIRCH-REALME-C11-LINUX/logs/
+KIRCH-REALME-C11-LINUX/state/

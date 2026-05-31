@@ -1,0 +1,209 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SERIAL="${REALME_SERIAL:-LVNJJVUCCYTOIJRW}"
+ROOT="$HOME/Downloads/KIRCH-REALME-C11-LINUX"
+STATE="$ROOT/state"
+LOGS="$ROOT/logs"
+PIDFILE="$STATE/realme-c11-scrcpy.pid"
+MODEFILE="$STATE/mode"
+
+mkdir -p "$STATE" "$LOGS"
+
+load_gui_env() {
+  # SSH sessions usually have DISPLAY unset.
+  # KTX NetLab i3 is running on Xorg :0 from LightDM.
+  # Do not fail if XAUTHORITY cannot be detected.
+  export DISPLAY="${DISPLAY:-:0}"
+
+  if [ -z "${XAUTHORITY:-}" ]; then
+    for x in \
+      "$HOME/.Xauthority" \
+      "/run/lightdm/root/:0"
+    do
+      if [ -e "$x" ]; then
+        export XAUTHORITY="$x"
+        break
+      fi
+    done
+  fi
+
+  true
+}
+adb_phone() {
+  adb -s "$SERIAL" "$@"
+}
+
+phone_ready() {
+  adb -s "$SERIAL" get-state 2>/dev/null | grep -qx device
+}
+
+stop_scrcpy_for_serial() {
+  if [ -f "$PIDFILE" ]; then
+    PID="$(cat "$PIDFILE" 2>/dev/null || true)"
+    if [ -n "${PID:-}" ] && kill -0 "$PID" 2>/dev/null; then
+      kill "$PID" 2>/dev/null || true
+    fi
+    rm -f "$PIDFILE"
+  fi
+
+  pkill -f "scrcpy.*$SERIAL" 2>/dev/null || true
+}
+
+audit() {
+  echo "===== REALME C11 AUDIT - KTX NETLAB ====="
+  echo "Host: $(hostname)"
+  echo "Display: ${DISPLAY:-unset}"
+  echo "XAUTHORITY: ${XAUTHORITY:-unset}"
+  echo
+
+  echo "===== TOOLS ====="
+  command -v adb || true
+  command -v scrcpy || true
+  echo
+
+  echo "===== ADB ====="
+  adb devices -l || true
+  echo
+
+  if phone_ready; then
+    echo "===== PHONE ====="
+    echo -n "Model: "
+    adb_phone shell getprop ro.product.model | tr -d '\r'
+    echo -n "Android: "
+    adb_phone shell getprop ro.build.version.release | tr -d '\r'
+    echo -n "Build: "
+    adb_phone shell getprop ro.build.display.id | tr -d '\r'
+    echo
+
+    echo "===== DISPLAY READ-ONLY ====="
+    adb_phone shell wm size
+    adb_phone shell wm density
+    echo
+
+    echo "===== BATTERY ====="
+    adb_phone shell dumpsys battery | grep -E "USB powered|AC powered|level|status|temperature|voltage|Charger voltage|Max charging" || true
+    echo
+
+    echo "===== SCRCPY PROCESSES ====="
+    pgrep -af "scrcpy.*$SERIAL" || echo "none"
+  else
+    echo "Phone not connected or not authorized."
+  fi
+}
+
+start_normal() {
+  load_gui_env
+  echo normal > "$MODEFILE"
+
+  adb -s "$SERIAL" wait-for-device
+
+  echo "Starting normal Realme C11 mirror on DISPLAY=$DISPLAY"
+  nohup scrcpy -s "$SERIAL" \
+    --max-size=1280 \
+    --max-fps=60 \
+    --no-audio \
+    --window-title "Realme C11 Mirror" \
+    > "$LOGS/realme-c11-normal.log" 2>&1 &
+
+  echo $! > "$PIDFILE"
+  sleep 1
+  audit
+}
+
+start_lcd() {
+  load_gui_env
+  echo lcd > "$MODEFILE"
+
+  adb -s "$SERIAL" wait-for-device
+
+  echo "Starting LCD/headless rescue mirror on DISPLAY=$DISPLAY"
+  nohup scrcpy -s "$SERIAL" \
+    --max-size=1280 \
+    --max-fps=60 \
+    --no-audio \
+    --turn-screen-off \
+    --window-title "Realme C11 Headless / LCD Rescue" \
+    > "$LOGS/realme-c11-lcd.log" 2>&1 &
+
+  echo $! > "$PIDFILE"
+  sleep 1
+  audit
+}
+
+start_low() {
+  load_gui_env
+  echo low > "$MODEFILE"
+
+  adb -s "$SERIAL" wait-for-device
+
+  echo "Starting low-power rescue mirror on DISPLAY=$DISPLAY"
+  nohup scrcpy -s "$SERIAL" \
+    --max-size=960 \
+    --max-fps=30 \
+    --no-audio \
+    --turn-screen-off \
+    --window-title "Realme C11 Low Power Rescue" \
+    > "$LOGS/realme-c11-low.log" 2>&1 &
+
+  echo $! > "$PIDFILE"
+  sleep 1
+  audit
+}
+
+case "${1:-connect}" in
+  connect)
+    load_gui_env
+    audit
+    echo
+    read -r -p "Start normal mirror? [y/N] " ans
+    case "$ans" in
+      y|Y|yes|YES) start_normal ;;
+      *) echo "Cancelled." ;;
+    esac
+    ;;
+
+  start|normal)
+    start_normal
+    ;;
+
+  lcd|headless)
+    start_lcd
+    ;;
+
+  low)
+    start_low
+    ;;
+
+  stop)
+    stop_scrcpy_for_serial
+    echo "Stopped Realme C11 mirror."
+    ;;
+
+  restart)
+    stop_scrcpy_for_serial
+    start_normal
+    ;;
+
+  status|audit)
+    load_gui_env
+    audit
+    ;;
+
+  logs)
+    echo "===== LOG FILES ====="
+    ls -lah "$LOGS"
+    echo
+    tail -n 120 "$LOGS"/*.log 2>/dev/null || true
+    ;;
+
+  help|-h|--help)
+    echo "Usage: kirch-realmeC11 {start|stop|restart|status|audit|lcd|low|logs}"
+    ;;
+
+  *)
+    echo "Unknown command: $1"
+    echo "Usage: kirch-realmeC11 {start|stop|restart|status|audit|lcd|low|logs}"
+    exit 2
+    ;;
+esac

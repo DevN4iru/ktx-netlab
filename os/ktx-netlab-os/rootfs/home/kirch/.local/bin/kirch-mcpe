@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+SERIAL="${REALME_SERIAL:-LVNJJVUCCYTOIJRW}"
+PKG="com.mojang.minecraftpe"
+ROOT="$HOME/Downloads/KIRCH-REALME-C11-LINUX"
+STATE="$ROOT/state"
+LOGS="$ROOT/logs"
+PIDFILE="$STATE/kirch-mcpe-scrcpy.pid"
+TITLE="Realme C11 MCPE Controls"
+
+mkdir -p "$STATE" "$LOGS"
+
+load_gui_env() {
+  export DISPLAY="${DISPLAY:-:0}"
+
+  if [ -z "${XAUTHORITY:-}" ]; then
+    for x in \
+      "$HOME/.Xauthority" \
+      "/run/lightdm/root/:0"
+    do
+      if [ -e "$x" ]; then
+        export XAUTHORITY="$x"
+        break
+      fi
+    done
+  fi
+
+  true
+}
+adb_phone() {
+  adb -s "$SERIAL" "$@"
+}
+
+stop_mcpe_scrcpy_only() {
+  if [ -f "$PIDFILE" ]; then
+    PID="$(cat "$PIDFILE" 2>/dev/null || true)"
+    if [ -n "${PID:-}" ] && kill -0 "$PID" 2>/dev/null; then
+      kill "$PID" 2>/dev/null || true
+    fi
+    rm -f "$PIDFILE"
+  fi
+
+  pkill -f "scrcpy.*$TITLE" 2>/dev/null || true
+}
+
+case "${1:-status}" in
+  start)
+    load_gui_env
+
+    echo "===== KIRCH MCPE START - KTX NETLAB ====="
+    adb -s "$SERIAL" wait-for-device
+
+    echo "Checking display state; not changing it:"
+    adb_phone shell wm size
+    adb_phone shell wm density
+    echo
+
+    echo "Stopping normal Realme mirror first..."
+    kirch-realmeC11 stop 2>/dev/null || true
+    stop_mcpe_scrcpy_only
+
+    echo "Force-stopping old MCPE instance..."
+    adb_phone shell am force-stop "$PKG" || true
+
+    echo "Starting MCPE HID controls session on DISPLAY=$DISPLAY"
+    nohup scrcpy -s "$SERIAL" \
+      --max-size=1280 \
+      --max-fps=60 \
+      --no-audio \
+      --keyboard=uhid \
+      --mouse=uhid \
+      --window-title "$TITLE" \
+      > "$LOGS/kirch-mcpe.log" 2>&1 &
+
+    echo $! > "$PIDFILE"
+    sleep 1
+
+    echo "Launching Minecraft..."
+    adb_phone shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 >/dev/null
+
+    echo
+    echo "MCPE session started."
+    echo "Stop with: kirch-mcpe stop"
+    ;;
+
+  stop)
+    echo "===== KIRCH MCPE STOP - KTX NETLAB ====="
+    stop_mcpe_scrcpy_only
+    adb_phone shell am force-stop "$PKG" 2>/dev/null || true
+    echo "MCPE session stopped."
+    echo "Normal mirror was not auto-started. Use: kirch-realmeC11"
+    ;;
+
+  status)
+    load_gui_env
+    echo "===== KIRCH MCPE STATUS - KTX NETLAB ====="
+    echo "Display: ${DISPLAY:-unset}"
+    echo "XAUTHORITY: ${XAUTHORITY:-unset}"
+    echo
+
+    adb devices -l | grep -E "List|$SERIAL" || true
+    echo
+
+    echo "Display state:"
+    adb_phone shell wm size || true
+    adb_phone shell wm density || true
+    echo
+
+    echo "MCPE Android PID:"
+    adb_phone shell pidof "$PKG" || echo "not running"
+    echo
+
+    echo "Matching MCPE scrcpy processes:"
+    pgrep -af "scrcpy.*$TITLE" || echo "none"
+    ;;
+
+  logs)
+    tail -n 120 "$LOGS/kirch-mcpe.log" 2>/dev/null || echo "No MCPE log yet."
+    ;;
+
+  help|-h|--help)
+    echo "Usage: kirch-mcpe {start|stop|status|logs}"
+    ;;
+
+  *)
+    echo "Usage: kirch-mcpe {start|stop|status|logs}"
+    exit 2
+    ;;
+esac
